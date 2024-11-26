@@ -10,9 +10,7 @@ const NewEventADd = new Schema(
     eventVenue: { type: String, required: true },
     eventCategory: { type: String, required: true },
     eventSubCategory: { type: String, required: true },
-  },
-  { collection: "eventsAdd" }
-);
-const EventAdd = mongoose.model("AdminEventAdd", NewEventADd);
+  });
+const EventAdd = mongoose.model("AllEvents", NewEventADd);
 
 export default EventAdd;
