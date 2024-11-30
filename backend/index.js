@@ -20,3 +20,4 @@ app.use("/api/users",userRouter)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+const TWILIO_SID = process.env.TWILIO_SID;
