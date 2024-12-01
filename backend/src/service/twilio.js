@@ -9,8 +9,9 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const user = twilio(accountSid, authToken);
 
 export const sendOTP = async (phoneNumber , otp ) =>{
+      console.log(phoneNumber, otp, "----");
     try {
-        const otp = await user.messages.create({
+        const Otp = await user.messages.create({
           body: ` your OTP ${otp}`,
           to: phoneNumber,
           from: process.env.TWILIO_PHONE_NUMBER,
