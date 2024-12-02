@@ -27,7 +27,6 @@ export const adminEventAdd = async (req, res, next) => {
       eventDescription,
       eventVenue,
       eventCategory,
-      eventSubCategory,
     } = req.body;
     if (
       !eventName ||
@@ -36,10 +35,23 @@ export const adminEventAdd = async (req, res, next) => {
       !eventPlace ||
       !eventVenue ||
       !eventDescription ||
-      !eventCategory ||
-      !eventSubCategory
+      !Array.isArray(eventCategory)
     )
       return res.status(400).json({ massage: "input not found" });
+       for (const category of eventCategory) {
+         if (!category.name || typeof category.name !== "string") {
+           return res.status(400).json({ message: "Invalid category name" });
+         }
+         if (
+           category.workersCount == null || 
+           typeof category.workersCount !== "number" ||
+           category.workersCount < 0
+         ) {
+           return res
+             .status(400)
+             .json({ message: "Invalid workersCount in eventCategory" });
+         }
+       }
     const newEvent = new EventAdd({
       eventName,
       eventDate,
@@ -48,7 +60,6 @@ export const adminEventAdd = async (req, res, next) => {
       eventDescription,
       eventVenue,
       eventCategory,
-      eventSubCategory,
     });
     await newEvent.save();
     return res.status(201).json({ message: "Event Added Successfully" });
@@ -65,7 +76,7 @@ export const adminEventGet = async (req, res, next) => {
 
     return res.status(200).json({
       msg: "categories fetched successfully",
-      allEvents: allEvents,
+      allEvents,
     });
   } catch (error) {
     next(error);
@@ -74,25 +85,57 @@ export const adminEventGet = async (req, res, next) => {
 
 export const adminEventEdit = async (req, res, next) => {
   try {
-    const { id } = req.query;
-    const eventEdit = req.body;
+    const { id } = req.query; 
+    const eventEdit = req.body; 
+
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res
         .status(400)
         .json({ message: "Invalid or missing ID in query" });
     }
-    if (!req.body || Object.keys(req.body).length === 0) {
+
+    if (!eventEdit || Object.keys(eventEdit).length === 0) {
       return res.status(400).json({ message: "Request body cannot be empty" });
     }
-    const updatedEvent = await EventAdd.findByIdAndUpdate(id, eventEdit, {
-      new: true,
-    });
-    if (!updatedEvent) {
-      return res.status(404).json({ msg: "Job not found" });
+
+    if (eventEdit.eventCategory) {
+      if (!Array.isArray(eventEdit.eventCategory)) {
+        return res
+          .status(400)
+          .json({ message: "eventCategory must be an array" });
+      }
+
+      for (const category of eventEdit.eventCategory) {
+        if (!category.name || typeof category.name !== "string") {
+          return res.status(400).json({ message: "Invalid category name" });
+        }
+        if (
+          category.workersCount == null || 
+          typeof category.workersCount !== "number" ||
+          category.workersCount < 0
+        ) {
+          return res
+            .status(400)
+            .json({ message: "Invalid workersCount in eventCategory" });
+        }
+      }
     }
-    return res.status(200).json({ massage: "New Event added successfully" });
+
+    const updatedEvent = await EventAdd.findByIdAndUpdate(id, eventEdit, {
+      new: true, 
+      runValidators: true,
+    });
+
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Event updated successfully", updatedEvent });
   } catch (error) {
-    next(error);
+    console.error(error.message);
+    next(error); // Pass the error to the global error handler
   }
 };
 
@@ -116,13 +159,13 @@ export const adminEventDelete = async (req, res, next) => {
 
 export const AdminCategoryAdd = async (req, res, next) => {
   try {
-    const { category, subCategory } = req.body;
-    if (!category || !subCategory)
+    const { category } = req.body;
+    if (!category )
       return res.status(404).json({ message: "No category" });
     const newCategory = new AdminCategory({
-      category: category,
-      subCategory: subCategory,
+      category: category
     });
+    
     await newCategory.save();
     return res.status(201).json({ message: "Categories Added Successfully" });
   } catch (error) {

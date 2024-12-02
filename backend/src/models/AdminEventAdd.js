@@ -8,9 +8,16 @@ const NewEventADd = new Schema(
     eventTime: { type: String, required: true },
     eventDescription: { type: String, required: true },
     eventVenue: { type: String, required: true },
-    eventCategory: { type: String, required: true },
-    eventSubCategory: { type: String, required: true },
-  });
+    eventCategory: [
+      {
+        name: { type: String, required: true }, 
+        workersCount: { type: Number, required: true, min: 0 }, 
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
 const EventAdd = mongoose.model("AllEvents", NewEventADd);
 
 export default EventAdd;
