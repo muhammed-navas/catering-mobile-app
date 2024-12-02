@@ -40,4 +40,8 @@ react Native , node js , express , mongodb
     { "categoryName": "Supplier", "count": 8 }
   ],
   "location": "Valluvambram Family Auditorium"
+<<<<<<< HEAD
 } -->
+=======
+} -->
+>>>>>>> 3000527 ( solve it)
