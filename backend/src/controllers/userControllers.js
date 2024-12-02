@@ -141,39 +141,24 @@ export const updateProfile = async (req, res, next) => {
 export const addUserToEvent = async (req, res, next) => {
   try {
     const {id} = req.query
-    const { categories } = req.body;
+    const { eventID , categoryID } = req.body;
 
-    if (!categories || !Array.isArray(categories)) {
+    if (!eventID || !categoryID) {
       return res.status(400).json({
         message: "userId, eventId, and categories array are required",
       });
     }
 
-    for (const category of categories) {
-      if (
-        !category.categoryName ||
-        typeof category.categoryName !== "string" ||
-        typeof category.count !== "number" ||
-        category.count < 0
-      ) {
-        return res
-          .status(400)
-          .json({ message: "Invalid category data structure" });
-      }
-    }
-
-    const existingEntry = await UserAddEvent.findOne({ userId, eventId });
+    const existingEntry = await User.findOne({ _id:id });
     if (existingEntry) {
       return res
         .status(400)
         .json({ message: "User already assigned to this event" });
     }
 
-    const newEntry = new UserAddEvent({
-      userId,
-      eventId,
-      categories,
-    });
+    const newEntry = new UserAddEvent.aggregate([
+      
+    ])
 
     await newEntry.save();
 
