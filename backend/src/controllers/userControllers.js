@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { accessToken, refreshToken } from "../helpers/accessToken.js";
 import UserAddEvent from "../models/userAddToEvent.js";
 import mongoose from "mongoose";
+import EventAdd from "../models/AdminEventAdd.js";
 
 dotenv.config();
 
@@ -52,8 +53,8 @@ export const submitOTP = async (req, res, next) => {
     if (currentTime > user.otpExpiry) {
       return res.status(401).json({ message: "OTP expired" });
     }
-    const access_Token = accessToken(user._id); 
-    const refresh_Token = refreshToken(user._id); 
+    const access_Token = accessToken(user._id);
+    const refresh_Token = refreshToken(user._id);
     user.refreshToken = refresh_Token;
 
     await user.save();
@@ -67,7 +68,7 @@ export const submitOTP = async (req, res, next) => {
 
     return res.status(200).json({
       message: "OTP verified successfully",
-      accessToken:access_Token,
+      accessToken: access_Token,
     });
   } catch (error) {
     console.error(error.message);
@@ -140,61 +141,117 @@ export const updateProfile = async (req, res, next) => {
 
 export const addUserToEvent = async (req, res, next) => {
   try {
-    const {id} = req.query
-    const { eventID , categoryID } = req.body;
+    const { id: userId } = req.query; // User ID
+    const { eventId, categoryID, workersCount } = req.body;
 
-    if (!eventID || !categoryID) {
+    if (!eventId || !categoryID || !userId || !workersCount) {
       return res.status(400).json({
-        message: "userId, eventId, and categories array are required",
+        message: "userID, eventId, categoryID, and workersCount are required.",
       });
     }
+   
 
-    const existingEntry = await User.findOne({ _id:id });
-    if (existingEntry) {
-      return res
-        .status(400)
-        .json({ message: "User already assigned to this event" });
+    // Check if the event exists
+    const eventID = await EventAdd.findById(eventId);
+    if (!eventID) {
+      return res.status(404).json({ message: "Event not found." });
+    }
+    console.log(eventID, "eventID");
+
+    // Find the specific category in the event
+    const category = eventID.eventCategory.find(
+      (cat) => cat._id.toString() === categoryID
+    );
+    if (!category) {
+      return res.status(404).json({ message: "Event category not found." });
+    }
+    console.log(category, "category");
+
+    // Check if the user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    console.log(user, "user");
+
+    // Check or create UserAddEvent
+    let userAddEvent = await UserAddEvent.findOne({ eventId });
+
+    if (userAddEvent) {
+      // If the event exists in UserAddEvent, update the categories
+      const existingCategory = userAddEvent.categories.find(
+        (cat) => String(cat.categoryID) === String(categoryID)
+      );
+
+      if (existingCategory) {
+        // Update workersCount and add user to workers if not already present
+        existingCategory.workersCount += workersCount;
+
+        if (!existingCategory.workers.includes(userId)) {
+          existingCategory.workers.push(userId);
+        }
+      } else {
+        // Add new category to the event
+        userAddEvent.categories.push({
+          categoryID,
+          workersCount,
+          workers: [userId],
+        });
+      }
+
+      // Save the updated document
+      await userAddEvent.save();
+    } else {
+      // If no existing event entry in UserAddEvent, create a new one
+      userAddEvent = new UserAddEvent({
+        eventId,
+        categories: [
+          {
+            categoryID,
+            workersCount,
+            workers: [userId],
+          },
+        ],
+      });
+
+      // Save the new document
+      await userAddEvent.save();
     }
 
-    const newEntry = new UserAddEvent.aggregate([
-      
-    ])
-
-    await newEntry.save();
-
-    return res.status(201).json({ message: "User added successfully"});
+    // Respond with the updated or created event document
+    return res.status(201).json({
+      message: "User added successfully.",
+      updatedEvent: userAddEvent,
+    });
   } catch (error) {
-    console.error(error.message);
-    next(error); 
+    console.error("Error adding user to event:", error.message);
+    next(error);
   }
 };
 
-export const getEventUsersByCategory = async (req, res, next) => {
+export const getEventWithUsers = async (req, res, next) => {
   try {
-    const { userId, eventId } = req.query;
+    const { eventID } = req.params;
 
-    const query = {};
-    if (userId) query.userId = userId;
-    if (eventId) query.eventId = eventId;
+    const event = await UserAddEvent.findOne({ eventId: eventID }).populate(
+      "categories.workers.userID",
+      "name"
+    );
 
-    const userEvents = await UserAddEvent.find(query)
-      .populate("userId", "phoneNumber") 
-      .populate("eventId", "eventName"); 
-
-    if (!userEvents || userEvents.length === 0) {
-      return res.status(404).json({ message: "No user events found" });
+    if (!event) {
+      return res.status(404).json({ message: "Event not found." });
     }
 
-    return res.status(200).json(userEvents);
+    return res.status(200).json(event);
   } catch (error) {
-    console.error(error.message);
-    next(error); 
+    console.error("Error fetching event data:", error.message);
+    next(error);
   }
 };
 
 export const deleteUserEvent = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id } = req.query; // event id
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid or missing ID" });
