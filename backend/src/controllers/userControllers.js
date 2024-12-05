@@ -150,8 +150,6 @@ export const addUserToEvent = async (req, res, next) => {
       });
     }
    
-
-    // Check if the event exists
     const eventID = await EventAdd.findById(eventId);
     if (!eventID) {
       return res.status(404).json({ message: "Event not found." });
