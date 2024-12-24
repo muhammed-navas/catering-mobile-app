@@ -144,77 +144,75 @@ export const addUserToEvent = async (req, res, next) => {
     const { id: userId } = req.query; // User ID
     const { eventId, categoryID, workersCount } = req.body;
 
-    if (!eventId || !categoryID || !userId || !workersCount) {
+    if (
+      !eventId ||
+      !categoryID ||
+      !userId ||
+      typeof workersCount !== "number"
+    ) {
       return res.status(400).json({
-        message: "userID, eventId, categoryID, and workersCount are required.",
+        message:
+          "userID, eventId, categoryID, and valid workersCount are required.",
       });
     }
-   
-    const eventID = await EventAdd.findById(eventId);
-    if (!eventID) {
+
+    // Check if the event exists
+    const event = await EventAdd.findById(eventId);
+    if (!event) {
       return res.status(404).json({ message: "Event not found." });
     }
-    console.log(eventID, "eventID");
-
-    // Find the specific category in the event
-    const category = eventID.eventCategory.find(
-      (cat) => cat._id.toString() === categoryID
-    );
-    if (!category) {
-      return res.status(404).json({ message: "Event category not found." });
-    }
-    console.log(category, "category");
 
     // Check if the user exists
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
-    console.log(user, "user");
 
-    // Check or create UserAddEvent
+    // // Find or create the UserAddEvent entry
     let userAddEvent = await UserAddEvent.findOne({ eventId });
 
-    if (userAddEvent) {
-      // If the event exists in UserAddEvent, update the categories
-      const existingCategory = userAddEvent.categories.find(
-        (cat) => String(cat.categoryID) === String(categoryID)
-      );
+    // if (userAddEvent) {
+    //   // Check if the category exists
+    //   const existingCategory = userAddEvent.categories.find(
+    //     (cat) => String(cat.categoryID) === String(categoryID)
+    //   );
 
-      if (existingCategory) {
-        // Update workersCount and add user to workers if not already present
-        existingCategory.workersCount += workersCount;
+    //   if (existingCategory) {
+    //     // Update workersCount and add user if not already present
+    //     if (existingCategory.workers.includes(userId)) {
+    //       return res.status(409).json({
+    //         message: "User is already part of this category.",
+    //       });
+    //     }
 
-        if (!existingCategory.workers.includes(userId)) {
-          existingCategory.workers.push(userId);
-        }
-      } else {
-        // Add new category to the event
-        userAddEvent.categories.push({
-          categoryID,
-          workersCount,
-          workers: [userId],
-        });
-      }
+    //     existingCategory.workersCount += workersCount;
+    //     existingCategory.workers.push(userId);
+    //   } else {
+    //     // Add new category to the event
+    //     userAddEvent.categories.push({
+    //       categoryID,
+    //       workersCount,
+    //       workers: [userId],
+    //     });
+    //   }
 
-      // Save the updated document
-      await userAddEvent.save();
-    } else {
-      // If no existing event entry in UserAddEvent, create a new one
-      userAddEvent = new UserAddEvent({
-        eventId,
-        categories: [
-          {
-            categoryID,
-            workersCount,
-            workers: [userId],
-          },
-        ],
-      });
+    //   // Save the updated document
+    //   await userAddEvent.save();
+    // } else {
+    //   // If no existing entry, create a new one
+    //   userAddEvent = new UserAddEvent({
+    //     eventId,
+    //     categories: [
+    //       {
+    //         categoryID,
+    //         workersCount,
+    //         workers: [userId],
+    //       },
+    //     ],
+    //   });
 
-      // Save the new document
-      await userAddEvent.save();
-    }
+    //   await userAddEvent.save();
+    // }
 
     // Respond with the updated or created event document
     return res.status(201).json({
@@ -226,6 +224,11 @@ export const addUserToEvent = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
+
+
 
 export const getEventWithUsers = async (req, res, next) => {
   try {
