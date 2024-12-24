@@ -16,16 +16,16 @@ export default function LoginScreen({ navigation }) {
 
 
     const handleNext = () => {
-        if(email.length > 0) {
-            if(password.length > 0) {
-                alert("please enter your right email and password");
-            }
-        }
-        if(email === "navas@gmail.com" && password === "123"){
-            navigation.navigate("Home");
-        }else{
-            alert("invalid email or password");
-        }
+        // if(email.length > 0) {
+        //     if(password.length > 0) {
+        //         alert("please enter your right email and password");
+        //     }
+        // }
+        // if(email === "navas@gmail.com" && password === "123"){
+            navigation.navigate("MainApp");
+        // }else{
+        //     alert("invalid email or password");
+        // }
     };
 
   return (
