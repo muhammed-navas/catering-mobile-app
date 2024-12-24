@@ -106,14 +106,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    color: "#fff",
+    color: "black",
     marginBottom: 40,
   },
   inputContainer: {
     marginBottom: 30,
+    width:"100%",
   },
   label: {
-    color: "#fff",
+    color: "black",
     marginBottom: 8,
   },
   input: {
@@ -129,15 +130,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   signupButton: {
-    backgroundColor: "#4A148",
+    backgroundColor: "#4A148C",
     borderRadius: 8,
     padding: 15,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#fff",
   },
   signupButtonText: {
-    color: "#fff",
+    color: "white",
     fontSize: 16,
     fontWeight: "500",
   },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   switchAuthText: {
-    color: "#fff",
+    color: "#4A148C",
     textDecorationLine: "underline",
   },
 });
