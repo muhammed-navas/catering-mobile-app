@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { StatusBar } from "react-native";
+
 // Import screens
 import SplashScreen from "./src/screens/SplashScreen";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
@@ -13,6 +15,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import CategoryScreen from "./src/screens/CategoryScreen";
 import EventScreen from "./src/screens/EventScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import EventDetails from "./src/screens/EventsDetailsScreen";
+import ConformPopup from "./src/components/ConformPopup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,6 +91,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
@@ -96,6 +101,8 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="MainApp" component={TabNavigator} />
+            <Stack.Screen name="EventDetails" component={EventDetails} />
+            <Stack.Screen name="ConformPopup" component={ConformPopup} />
           </>
         )}
       </Stack.Navigator>
