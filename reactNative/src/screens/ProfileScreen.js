@@ -14,7 +14,9 @@ const ProfileScreen = () => {
       {/* Profile Section */}
       <View style={styles.profileSection}>
         <Image
-          source={{ uri: "https://placeholder.svg?height=100&width=100" }}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/128/1144/1144709.png",
+          }}
           style={styles.avatar}
         />
         <Text style={styles.name}>Bessie Cooper</Text>

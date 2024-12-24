@@ -16,6 +16,7 @@ import CategoryScreen from "./src/screens/CategoryScreen";
 import EventScreen from "./src/screens/EventScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import EventDetails from "./src/screens/EventsDetailsScreen";
+import ConformPopup from "./src/components/ConformPopup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,6 +102,7 @@ export default function App() {
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="MainApp" component={TabNavigator} />
             <Stack.Screen name="EventDetails" component={EventDetails} />
+            <Stack.Screen name="ConformPopup" component={ConformPopup} />
           </>
         )}
       </Stack.Navigator>

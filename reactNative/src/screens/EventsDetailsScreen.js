@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
+import ConformPopup from "../components/ConformPopup";
 
 const months = [
   "January",
@@ -61,59 +63,89 @@ const servicesItems = [
     backgroundColor: "#F5F5F5",
   },
 ];
-
 const getCurrentDate = () => {
-  const now = new Date();
-  return {
-    current: months[now.getMonth()],
-    previous: months[(now.getMonth() - 1 + 12) % 12],
-    twoMonthsAgo: months[(now.getMonth() - 2 + 12) % 12],
-  };
+    const now = new Date();
+    return {
+        current: months[now.getMonth()],
+        previous: months[(now.getMonth() - 1 + 12) % 12],
+        twoMonthsAgo: months[(now.getMonth() - 2 + 12) % 12],
+    };
 };
 
-const ServiceCard = ({ title, icon, count, backgroundColor }) => (
-  <TouchableOpacity style={[styles.card, { backgroundColor }]}>
-    <Icon
-      name={icon}
-      size={24}
-      color={backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000"}
-      style={styles.cardIcon}
-    />
-    <Text
-      style={[
-        styles.cardTitle,
-        { color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000" },
-      ]}
-    >
-      {title}
-    </Text>
-    <View style={styles.countContainer}>
-      <Text
-        style={[
-          styles.count,
-          { color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000" },
-        ]}
-      >
-        {count}
-      </Text>
-    </View>
-  </TouchableOpacity>
-);
+const ServiceCard = ({ title, icon, count, backgroundColor }) => {
+        const [isOpen,setIsOpen] = useState(false)
+          const handleOpenPopup = () => setIsOpen(true);
+          const handleClosePopup = () => setIsOpen(false);
+          const handleSubmit = () => {
+            // Handle submit logic here
+            setIsOpen(false); // Close popup after submission
+          };
+    return (
+      <>
+        <TouchableOpacity
+          onPress={() => setIsOpen(true)}
+          style={[styles.card, { backgroundColor }]}
+        >
+          <Icon
+            name={icon}
+            size={24}
+            color={backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000"}
+            style={styles.cardIcon}
+          />
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000" },
+            ]}
+          >
+            {title}
+          </Text>
+          <View style={styles.countContainer}>
+            <Text
+              style={[
+                styles.count,
+                {
+                  color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000",
+                },
+              ]}
+            >
+              {count}
+            </Text>
+          </View>
+          {isOpen && (
+            <ConformPopup
+              isOpen={isOpen}
+              onClose={handleClosePopup}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </TouchableOpacity>
+      </>
+    );
+}
 
-const EventDetails = ({navigation}) => {
+const EventDetails = ({ navigation }) => {
   const dates = getCurrentDate();
   const chartData = [
     { month: dates.twoMonthsAgo, requests: 123, color: "#D9ED92" },
     { month: dates.previous, requests: 97, color: "orange" },
     { month: dates.current, requests: 174, color: "#5B9BF7" },
   ];
-const backHandle = () =>{
-navigation.navigate("EventTab");
-}
+
   return (
     <ScrollView style={styles.container}>
-      <Icon onPress={backHandle} name="chevron-left" size={40} color="black" />
-      <Text style={styles.headerTitle}>Employment chart</Text>
+      <Icon
+        onPress={() =>
+          navigation.navigate("MainApp", {
+            screen: "EventTab",
+          })
+        }
+        name="chevron-left"
+        size={40}
+        color="black"
+        style={{ marginBottom: 30 }}
+      />
+      {/* <Text style={styles.headerTitle}>Employment chart</Text> */}
 
       <View style={styles.chartContainer}>
         {chartData.map((item, index) => (
@@ -152,8 +184,10 @@ navigation.navigate("EventTab");
       </View>
       <View style={styles.feel}>
         <View style={styles.footerContent}>
-          <Icon name="trending-up" size={20} color="#000" />
-          <Text style={styles.footerText}>Choose Your Working Category</Text>
+          <Icon name="trending-up" size={20} color="white" />
+          <Text style={[styles.footerText, { color: "white" }]}>
+            Choose Your Working Category
+          </Text>
           {/* <Icon name="chevron-right" size={20} color="#000" /> */}
         </View>
       </View>
@@ -208,25 +242,25 @@ const styles = StyleSheet.create({
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: "#F0F0F0",
+    borderTopColor: "#d3d6de",
     paddingTop: 15,
     marginTop: 10,
   },
   feel: {
-    padding:10,
+    padding: 10,
   },
   footerContent: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F8F9FA",
+    backgroundColor: "black",
     padding: 12,
     borderRadius: 12,
   },
   emoji: {
     backgroundColor: "#F8F9FA",
     padding: 12,
-    height:90,
+    height: 90,
     borderRadius: 12,
   },
   footerText: {
@@ -234,15 +268,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 14,
   },
-  emojiBg:{
-flexDirection:"row",
-alignItems: "center",
-gap:5,
+  emojiBg: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
   },
-  emojiStyle:{
-       backgroundColor:"gray",
-       padding:5,
-       borderRadius:40,
+  emojiStyle: {
+    backgroundColor: "gray",
+    padding: 5,
+    borderRadius: 40,
   },
   grid: {
     flexDirection: "row",

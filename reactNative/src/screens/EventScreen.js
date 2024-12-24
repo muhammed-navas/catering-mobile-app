@@ -53,7 +53,7 @@ import { useNavigation } from "@react-navigation/native";
    // Add more events as needed
  ];
 
-const EventCard = ({ title, location, count, image  }) => {
+const EventCard = ({ title, location, count, image,key  }) => {
 
     const navigation = useNavigation();
 
@@ -61,10 +61,7 @@ const EventCard = ({ title, location, count, image  }) => {
         navigation.navigate("EventDetails");
     }
   return (
-    <TouchableOpacity style={styles.card} onPress={clickHandle}>
-      {/* <View style={styles.labelContainer}>
-        <Text style={styles.label}>Social</Text>
-      </View> */}
+    <TouchableOpacity key={key} style={styles.card} onPress={clickHandle}>
 
       <View style={styles.cardMain}>
         <Image
@@ -138,9 +135,9 @@ const EventScreen = () => (
     </View>
 
     <ScrollView style={styles.eventsList}>
-      {events.map((event) => (
+      {events.map((event,i) => (
         <EventCard
-          key={event.id}
+          key={event.i}
           title={event.title}
           location={event.location}
           count={event.count}
