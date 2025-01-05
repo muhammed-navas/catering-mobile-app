@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -7,59 +7,30 @@ import {
   Dimensions,
 } from "react-native";
 const { width } = Dimensions.get("window");
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function OnboardingScreen({ navigation }) {
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const onboardingData = [
-    {
-      title: "Welcome to Blue Bury Star",
-      description:
-        "A small catering service specializes in providing fresh, delicious meals for intimate gatherings and events.",
-    },
-    {
-      title: "Customized Service",
-      description:
-        "Their menu features a range of customized dishes, from savory appetizers to decadent desserts, tailored to fit client preferences.",
-    },
-  ];
-
-  const handleNext = () => {
-    if (currentPage < onboardingData.length - 1) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      navigation.navigate("Login");
-    }
+  const handleExplore = () => {
+    navigation.navigate("Login");
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.topSection}>
-        <Text style={styles.title}>{onboardingData[currentPage].title}</Text>
-        <Text style={styles.description}>
-          {onboardingData[currentPage].description}
-        </Text>
-        <View style={styles.dotContainer}>
-          {onboardingData.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.dot,
-                { backgroundColor: index === currentPage ? "orange" : "white" },
-              ]}
-            />
-          ))}
+      <View style={styles.content}>
+
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Creatives of the next generation</Text>
+        </View>
+
+        <View style={styles.decorativeElements}>
+          <View style={styles.redCircle} />
+          <View style={styles.redCircle1} />
+          <View style={styles.redCircle2} />
         </View>
       </View>
-      <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-          <View style={styles.buttonContent}>
-            <Text style={styles.nextButtonText}>Next</Text>
-            <Icon name="arrow-forward" size={20} color="#4A148C" />
-          </View>
-        </TouchableOpacity>
-      </View>
+
+      <TouchableOpacity style={styles.exploreButton} onPress={handleExplore}>
+        <Text style={styles.buttonText}>Explore</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -68,62 +39,69 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: 24,
   },
-  topSection: {
-    backgroundColor: "#4A148C",
-    height: "60%",
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    padding: 20,
-    justifyContent: "center",
-  },
-  bottomSection: {
+  content: {
     flex: 1,
-    padding: 20,
-    justifyContent: "flex-end",
+    // justifyContent: "center",
   },
-  title: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "bold",
+  titleContainer: {
+    marginTop: 150,
+    // width: "100%",
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+  titleText: {
+    fontSize: 60,
+    fontWeight: "700",
+    color: "#000",
+    lineHeight: 58,
+    // textAlign: "center",
+  },
+  decorativeElements: {
+    position: "relative",
+    flex: 1,
+  },
+  redCircle: {
+    position: "absolute",
+    right: -90,
+    bottom: 100,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "#FF4B36",
+    opacity: 0.9,
+  },
+  redCircle1: {
+    position: "absolute",
+    left: -90,
+    bottom: 280,
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+    backgroundColor: "#445c42",
+    opacity: 0.9,
+  },
+  redCircle2: {
+    position: "absolute",
+    left: -130,
+    bottom: -170,
+    width: 250,
+    height: 250,
+    borderRadius: 150,
+    backgroundColor: "#3f2357",
+    opacity: 0.9,
+  },
+  exploreButton: {
+    backgroundColor: "#000",
+    paddingVertical: 16,
+    borderRadius: 8,
+    alignItems: "center",
     marginBottom: 20,
   },
-  description: {
+  buttonText: {
     color: "#fff",
     fontSize: 16,
-    lineHeight: 24,
-  },
-  dotContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 50,
-    justifyContent: "center",
-    left: 0,
-    right: 0,
-    gap: 5,
-  },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 20,
-    marginHorizontal: 0, // Space between dots
-  },
-  nextButton: {
-    alignSelf: "flex-end",
-    backgroundColor: "#c2ccca",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-  },
-  buttonContent: {
-    flexDirection: "row", // Align text and icon horizontally
-    alignItems: "center", // Center align items vertically
-  },
-  nextButtonText: {
-    color: "#4A148C",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginRight: 8, // Add space between text and icon
+    fontWeight: "500",
   },
 });
