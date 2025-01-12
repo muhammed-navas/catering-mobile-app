@@ -5,103 +5,163 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  SafeAreaView,
+  Image,
+  ImageBackground,
 } from "react-native";
-const { width } = Dimensions.get("window");
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import {
+  useFonts,
+  Outfit_400Regular,
+  Outfit_500Medium,
+  Outfit_700Bold,
+} from "@expo-google-fonts/outfit";
+import Background from "../components/Background";
+
+const { width, height } = Dimensions.get("window");
 
 export default function OnboardingScreen({ navigation }) {
-  const handleExplore = () => {
+
+ const [fontsLoaded] = useFonts({
+   Outfit_400Regular,
+   Outfit_700Bold,
+   Outfit_500Medium,
+ });
+
+
+  const handleSkip = () => {
     navigation.navigate("Login");
   };
 
+  // const handleNext = () => {
+  //   // Handle next screen navigation
+  //   navigation.navigate("Login");
+  // };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    <>
+      {/* <LinearGradient
+        colors={["rgba(235,223,248,1)", "rgba(248,251,220,1)"]}
+        style={styles.container}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }} // Matches 0deg gradient direction
+      > */}
+      <Background>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <Image
+              source={{
+                uri: "https://cdn-icons-png.flaticon.com/128/10883/10883735.png",
+              }}
+              style={styles.headerIcon}
+            />
+            <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+              <Text style={styles.skipText}>Skip</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Creatives of the next generation</Text>
-        </View>
+          <View style={styles.content}>
+            <Image
+              source={require("../../assets/first.png")}
+              style={styles.mainImage}
+              resizeMode="contain"
+            />
 
-        <View style={styles.decorativeElements}>
-          <View style={styles.redCircle} />
-          <View style={styles.redCircle1} />
-          <View style={styles.redCircle2} />
-        </View>
-      </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>Love served with every bite</Text>
+              <Text style={styles.subtitle}>
+                Exquisite wedding catering for unforgettable moments, crafted
+                with love
+              </Text>
+            </View>
+          </View>
 
-      <TouchableOpacity style={styles.exploreButton} onPress={handleExplore}>
-        <Text style={styles.buttonText}>Explore</Text>
-      </TouchableOpacity>
-    </View>
+          <View style={styles.navigationButtons}>
+            {/* <TouchableOpacity style={styles.navButton} onPress={handleNext}>
+              <AntDesign name="right" size={24} color="black" />
+            </TouchableOpacity> */}
+          </View>
+        </SafeAreaView>
+      </Background>
+      {/* </LinearGradient> */}
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 24,
+    // backgroundColor: "orange",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    marginTop:20,
+    paddingTop: 20,
+  },
+  headerIcon: {
+    width: 24,
+    height: 24,
+    tintColor: "black",
+  },
+  skipButton: {
+    padding: 10,
+  },
+  skipText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "500",
+    fontFamily: "Outfit_400Regular",
   },
   content: {
     flex: 1,
-    // justifyContent: "center",
-  },
-  titleContainer: {
-    marginTop: 150,
-    // width: "100%",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  titleText: {
-    fontSize: 60,
-    fontWeight: "700",
-    color: "#000",
-    lineHeight: 58,
-    // textAlign: "center",
-  },
-  decorativeElements: {
-    position: "relative",
-    flex: 1,
-  },
-  redCircle: {
-    position: "absolute",
-    right: -90,
-    bottom: 100,
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: "#FF4B36",
-    opacity: 0.9,
-  },
-  redCircle1: {
-    position: "absolute",
-    left: -90,
-    bottom: 280,
-    width: 150,
-    height: 150,
-    borderRadius: 100,
-    backgroundColor: "#445c42",
-    opacity: 0.9,
-  },
-  redCircle2: {
-    position: "absolute",
-    left: -130,
-    bottom: -170,
-    width: 250,
-    height: 250,
-    borderRadius: 150,
-    backgroundColor: "#3f2357",
-    opacity: 0.9,
-  },
-  exploreButton: {
-    backgroundColor: "#000",
-    paddingVertical: 16,
-    borderRadius: 8,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+    paddingHorizontal: 20,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "500",
+  mainImage: {
+    width: width * 0.8,
+    height: height * 0.4,
+    marginBottom: 40,
+  },
+  textContainer: {
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  title: {
+    fontSize: 36,
+    color: "black",
+    marginBottom: 10,
+    textAlign: "center",
+    fontFamily: "Outfit_500Medium",
+    textTransform: "uppercase",
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "black",
+    textAlign: "center",
+    opacity: 0.9,
+    fontFamily: "Outfit_400Regular",
+  },
+  navigationButtons: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingHorizontal: 15,
+    paddingBottom: 40,
+  },
+  navButton: {
+    width: 60,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: "black",
+    opacity: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
