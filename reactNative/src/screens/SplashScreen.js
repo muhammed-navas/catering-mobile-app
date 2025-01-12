@@ -4,7 +4,12 @@ import { View, Text, Image, StyleSheet } from "react-native";
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/icon.png")} style={styles.logo} />
+      <Image
+        source={{
+          uri: "https://cdn-icons-png.flaticon.com/128/9099/9099152.png",
+        }}
+        style={styles.logo}
+      />
       <Text style={styles.title}>Blue Bury Star</Text>
       <Text style={styles.subtitle}>
         Truth Is The Greatest Belief In This World

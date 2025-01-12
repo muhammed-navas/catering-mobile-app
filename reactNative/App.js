@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 import { StatusBar } from "react-native";
 
 // Import screens
@@ -91,7 +90,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar
+        barStyle="dark-content"
+        translucent={true}
+        backgroundColor="transparent"
+      />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
