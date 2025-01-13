@@ -7,10 +7,8 @@ import {
   Dimensions,
   SafeAreaView,
   Image,
-  ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   useFonts,
   Outfit_400Regular,
@@ -18,6 +16,7 @@ import {
   Outfit_700Bold,
 } from "@expo-google-fonts/outfit";
 import Background from "../components/Background";
+import ButtonTextFit from "../components/ButtonTextFit";
 
 const { width, height } = Dimensions.get("window");
 
@@ -34,19 +33,13 @@ export default function OnboardingScreen({ navigation }) {
     navigation.navigate("Login");
   };
 
-  // const handleNext = () => {
-  //   // Handle next screen navigation
-  //   navigation.navigate("Login");
-  // };
+  const handleNext = () => {
+    // Handle next screen navigation
+    navigation.navigate("Login");
+  };
 
   return (
     <>
-      {/* <LinearGradient
-        colors={["rgba(235,223,248,1)", "rgba(248,251,220,1)"]}
-        style={styles.container}
-        start={{ x: 0.5, y: 0 }}
-        end={{ x: 0.5, y: 1 }} // Matches 0deg gradient direction
-      > */}
       <Background>
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
@@ -77,14 +70,18 @@ export default function OnboardingScreen({ navigation }) {
             </View>
           </View>
 
-          <View style={styles.navigationButtons}>
-            {/* <TouchableOpacity style={styles.navButton} onPress={handleNext}>
-              <AntDesign name="right" size={24} color="black" />
-            </TouchableOpacity> */}
-          </View>
+          <ButtonTextFit
+            title={
+              <AntDesign
+                name="right"
+                size={24}
+                color="black"
+                onPress={handleNext}
+              />
+            }
+          />
         </SafeAreaView>
       </Background>
-      {/* </LinearGradient> */}
     </>
   );
 }
@@ -95,7 +92,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: "orange",
   },
   header: {
     flexDirection: "row",
@@ -148,20 +144,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     opacity: 0.9,
     fontFamily: "Outfit_400Regular",
-  },
-  navigationButtons: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingHorizontal: 15,
-    paddingBottom: 40,
-  },
-  navButton: {
-    width: 60,
-    height: 40,
-    borderRadius: 12,
-    backgroundColor: "black",
-    opacity: 0.3,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

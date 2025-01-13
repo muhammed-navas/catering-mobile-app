@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { StatusBar } from "react-native";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/AntDesign";
+// import { StatusBar } from "react-native";
+import { StatusBar, View, StyleSheet } from "react-native";
 
 // Import screens
 import SplashScreen from "./src/screens/SplashScreen";
@@ -26,13 +28,36 @@ function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: "white",
           borderTopWidth: 0,
-          height: 60,
-          paddingBottom: 8,
+          height: 90,
+          paddingVertical: 10,
+          position: "absolute",
+          bottom: 0,
+          left: 20,
+          right: 20,
+          borderRadius: 35,
+          elevation: 8,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
         },
-        tabBarActiveTintColor: "#4A0080",
-        tabBarInactiveTintColor: "#666",
+        tabBarItemStyle: {
+          height: 50,
+          borderRadius: 25,
+          marginHorizontal: 5,
+        },
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "#9CAFAA",
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+        },
+        tabBarBackground: () => <View style={StyleSheet.absoluteFill} />,
       }}
     >
       <Tab.Screen
@@ -43,6 +68,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Icon name="home" size={24} color={color} />
           ),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -53,6 +84,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Icon name="view-grid" size={24} color={color} />
           ),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -63,6 +100,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Icon name="star" size={24} color={color} />
           ),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -73,11 +116,18 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Icon name="account" size={24} color={color} />
           ),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
     </Tab.Navigator>
   );
 }
+
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
