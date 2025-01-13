@@ -12,10 +12,13 @@ import Icon from "react-native-vector-icons/Feather";
 import gift from '../../assets/gift.png'
 import enjoy from '../../assets/enjoy.png'
 import ImageCarousel from "../components/SlideImage";
+import Background from "../components/Background";
 
 const HomeScreen = () => {
   
   return (
+
+    <Background >
     <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scrollView}
@@ -60,13 +63,14 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </Background>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     paddingHorizontal: 10,
   },
   scrollView: {
