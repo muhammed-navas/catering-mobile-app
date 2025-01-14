@@ -1,89 +1,138 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Image,
+  TextInput,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
+import Background from "../components/Background";
+import Icon from "react-native-vector-icons/Feather";
 
-const services = [
+const events = [
   {
     id: "1",
-    title: "Medieval Character",
-    description: "Historical character visualization",
-    image:
-      "https://img.freepik.com/free-photo/3d-illustration-medieval-historical-character_183364-81199.jpg?uid=R179782123&ga=GA1.1.1661294206.1732189762&semt=ais_hybrid",
+    name: "Medieval Fair",
+    place: "Castle Grounds",
+    totalCount: 500,
+    description:
+      "Experience the charm of medieval times with authentic food, costumes, and activities.",
   },
   {
     id: "2",
-    title: "Character Design",
-    description: "Custom character creation",
-    image:
-      "https://img.freepik.com/free-photo/3d-illustration-medieval-historical-character_183364-81199.jpg?uid=R179782123&ga=GA1.1.1661294206.1732189762&semt=ais_hybrid",
+    name: "Comic Con",
+    place: "Convention Center",
+    totalCount: 10000,
+    description:
+      "The ultimate gathering for comic book fans, cosplayers, and pop culture enthusiasts.",
   },
   {
     id: "3",
-    title: "3D Modeling",
-    description: "Professional 3D designs",
-    image:
-      "https://img.freepik.com/free-photo/3d-illustration-medieval-historical-character_183364-81199.jpg?uid=R179782123&ga=GA1.1.1661294206.1732189762&semt=ais_hybrid",
+    name: "Food Festival",
+    place: "City Park",
+    totalCount: 2000,
+    description:
+      "Savor diverse cuisines from around the world in one delicious event.",
+  },
+  {
+    id: "4",
+    name: "Tech Expo",
+    place: "Innovation Hub",
+    totalCount: 3000,
+    description:
+      "Discover the latest in technology and gadgets from leading companies.",
+  },
+  {
+    id: "5",
+    name: "Music Festival",
+    place: "Riverside Amphitheater",
+    totalCount: 15000,
+    description:
+      "Three days of non-stop music featuring top artists across various genres.",
   },
 ];
 
-const ServiceCard = ({ title, description, image }) => {
+const EventCard = ({ name, place, totalCount, description }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate("ServiceDetails")}
-    >
+    <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Image source={{ uri: image }} style={styles.cardImage} />
-        <Text style={styles.cardTitle}>{title}</Text>
+        <Text style={styles.cardName}>{name}</Text>
+        <Text style={styles.cardPlace}>{place}</Text>
+        <Text style={styles.cardCount}>Total Attendees: {totalCount}</Text>
         <Text style={styles.cardDescription}>{description}</Text>
-        <Icon
-          name="arrow-forward"
-          size={20}
-          color="#666"
-          style={styles.cardIcon}
-        />
+        <TouchableOpacity
+          style={styles.viewMoreButton}
+          onPress={() => navigation.navigate("EventDetails")}
+        >
+          <Text style={styles.viewMoreText}>View More</Text>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-const EventScreen = () => (
-  <ScrollView style={styles.container}>
-    <View style={styles.header}>
-      <Text style={styles.headerTitle}>Reduce your{"\n"}to-do list.</Text>
-      <Text style={styles.headerSubtitle}>Leave these services to us.</Text>
-    </View>
+const EventScreen = () => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-    <View style={styles.servicesContainer}>
-      {services.map((service) => (
-        <ServiceCard
-          key={service.id}
-          title={service.title}
-          description={service.description}
-          image={service.image}
-        />
-      ))}
-    </View>
-  </ScrollView>
-);
+  const filteredEvents = events.filter(
+    (event) =>
+      event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.place.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <Background>
+      <ScrollView style={styles.container}>
+        <View style={styles.search}>
+          <Icon
+            name="search"
+            size={20}
+            color="#777"
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholderTextColor="#777"
+          />
+        </View>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Upcoming{"\n"}Events</Text>
+          <Text style={styles.headerSubtitle}>
+            Don't miss out on these exciting gatherings!
+          </Text>
+        </View>
+
+        <View style={styles.eventsContainer}>
+          {filteredEvents.map((event) => (
+            <EventCard
+              key={event.id}
+              name={event.name}
+              place={event.place}
+              totalCount={event.totalCount}
+              description={event.description}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </Background>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    marginBottom: 60,
+    paddingHorizontal: 10,
   },
   header: {
-    padding: 24,
     paddingTop: 60,
   },
   headerTitle: {
@@ -98,11 +147,14 @@ const styles = StyleSheet.create({
     color: "#666666",
     marginBottom: 24,
   },
-  servicesContainer: {
-    padding: 16,
+  eventsContainer: {
+    // padding: 16,
+
   },
   card: {
-    backgroundColor: "#F5F5F7",
+    // backgroundColor: "#A0D683",
+    borderColor: "#80C4E9",
+    borderWidth: 2,
     borderRadius: 16,
     marginBottom: 16,
     overflow: "hidden",
@@ -110,16 +162,20 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 16,
   },
-  cardImage: {
-    width: "100%",
-    height: 180,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  cardTitle: {
+  cardName: {
     fontSize: 20,
     fontWeight: "600",
     color: "#000000",
+    marginBottom: 4,
+  },
+  cardPlace: {
+    fontSize: 16,
+    color: "#666666",
+    marginBottom: 8,
+  },
+  cardCount: {
+    fontSize: 14,
+    color: "#333333",
     marginBottom: 8,
   },
   cardDescription: {
@@ -127,9 +183,40 @@ const styles = StyleSheet.create({
     color: "#666666",
     marginBottom: 16,
   },
-  cardIcon: {
+  viewMoreButton: {
     alignSelf: "flex-end",
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
   },
+  viewMoreText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  // ...............................
+  search: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 45,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderColor: "#80C4E9",
+    borderWidth: 1,
+    marginTop: 40,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontFamily: "Outfit_400Regular",
+    fontSize: 16,
+    color: "#000",
+    padding: 0,
+  },
+  // ...............................
 });
 
 export default EventScreen;

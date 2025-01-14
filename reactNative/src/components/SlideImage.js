@@ -66,10 +66,10 @@ const ImageCarousel = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
   scrollViewContent: {
-    paddingHorizontal: cardSpacing / 20,
+    // paddingHorizontal: cardSpacing / 20,
   },
   cardContainer: {
     width: cardWidth,
@@ -78,13 +78,13 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 300,
-    borderRadius: 10,
+    height: 250,
+    borderRadius: 30,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject, // Covers the entire Image
     backgroundColor: "rgba(0, 0, 0, 0.2)", // Black with low opacity
-    borderRadius: 10,
+    borderRadius: 30,
   },
   pagination: {
     flexDirection: "row",
