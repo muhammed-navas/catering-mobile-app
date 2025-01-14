@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import Background from "../components/Background";
 
 export default function SplashScreen() {
   return (
+   <Background > 
     <View style={styles.container}>
       <Image
         source={{
@@ -15,13 +17,13 @@ export default function SplashScreen() {
         Truth Is The Greatest Belief In This World
       </Text>
     </View>
+   </Background>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

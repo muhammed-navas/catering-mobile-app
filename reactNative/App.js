@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Icon from "react-native-vector-icons/AntDesign";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 // import { StatusBar } from "react-native";
 import { StatusBar, View, StyleSheet } from "react-native";
 
@@ -30,7 +30,8 @@ function TabNavigator() {
         tabBarStyle: {
           backgroundColor: "white",
           borderTopWidth: 0,
-          height: 90,
+          height: 80,
+          paddingTop: 10,
           paddingVertical: 10,
           position: "absolute",
           bottom: 0,
@@ -66,14 +67,14 @@ function TabNavigator() {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Icon name="home" size={24} color={color} />
+            <AntDesign name="home" size={24} color={color} />
           ),
-          tabBarItemStyle: ({ focused }) => ({
-            backgroundColor: focused ? "#000" : "#f5f5f5",
-            height: 50,
-            borderRadius: 25,
-            marginHorizontal: 5,
-          }),
+          // tabBarItemStyle: ({ focused }) => ({
+          //   backgroundColor: focused ? "#000" : "#f5f5f5",
+          //   height: 50,
+          //   // borderRadius: 25,
+          //   marginHorizontal: 5,
+          // }),
         }}
       />
       <Tab.Screen
@@ -82,14 +83,14 @@ function TabNavigator() {
         options={{
           tabBarLabel: "Category",
           tabBarIcon: ({ color }) => (
-            <Icon name="view-grid" size={24} color={color} />
+            <MaterialIcons name="category" size={24} color={color} />
           ),
-          tabBarItemStyle: ({ focused }) => ({
-            backgroundColor: focused ? "#000" : "#f5f5f5",
-            height: 50,
-            borderRadius: 25,
-            marginHorizontal: 5,
-          }),
+          // tabBarItemStyle: ({ focused }) => ({
+          //   backgroundColor: focused ? "#000" : "#f5f5f5",
+          //   height: 50,
+          //   borderRadius: 25,
+          //   marginHorizontal: 5,
+          // }),
         }}
       />
       <Tab.Screen
@@ -98,14 +99,14 @@ function TabNavigator() {
         options={{
           tabBarLabel: "Event",
           tabBarIcon: ({ color }) => (
-            <Icon name="star" size={24} color={color} />
+            <AntDesign name="star" size={24} color={color} />
           ),
-          tabBarItemStyle: ({ focused }) => ({
-            backgroundColor: focused ? "#000" : "#f5f5f5",
-            height: 50,
-            borderRadius: 25,
-            marginHorizontal: 5,
-          }),
+          // tabBarItemStyle: ({ focused }) => ({
+          //   backgroundColor: focused ? "#000" : "#f5f5f5",
+          //   height: 50,
+          //   borderRadius: 25,
+          //   marginHorizontal: 5,
+          // }),
         }}
       />
       <Tab.Screen
@@ -114,19 +115,54 @@ function TabNavigator() {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
-            <Icon name="account" size={24} color={color} />
+            <AntDesign name="user" size={24} color={color} />
           ),
-          tabBarItemStyle: ({ focused }) => ({
-            backgroundColor: focused ? "#000" : "#f5f5f5",
-            height: 50,
-            borderRadius: 25,
-            marginHorizontal: 5,
-          }),
+          // tabBarItemStyle: ({ focused }) => ({
+          //   backgroundColor: focused ? "#000" : "#f5f5f5",
+          //   height: 50,
+          //   borderRadius: 25,
+          //   marginHorizontal: 5,
+          // }),
         }}
       />
     </Tab.Navigator>
   );
 }
+
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    height: 80,
+    paddingVertical: 10,
+    position: "absolute",
+    bottom: 25,
+    left: 20,
+    right: 20,
+    borderRadius: 35,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },
+  tabItem: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tabItemContent: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 
 export default function App() {
