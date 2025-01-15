@@ -15,7 +15,7 @@ import {
   Outfit_500Medium,
   Outfit_700Bold,
 } from "@expo-google-fonts/outfit";
-import Background from "../components/Background";
+import {Background }from "../components/Background";
 import ButtonTextFit from "../components/ButtonTextFit";
 
 const { width, height } = Dimensions.get("window");
@@ -72,12 +72,14 @@ export default function OnboardingScreen({ navigation }) {
 
           <ButtonTextFit
             title={
-              <AntDesign
-                name="right"
-                size={24}
-                color="black"
-                onPress={handleNext}
-              />
+              <View>
+                <AntDesign
+                  name="right"
+                  size={24}
+                  color="black"
+                  onPress={handleNext}
+                />
+              </View>
             }
           />
         </SafeAreaView>

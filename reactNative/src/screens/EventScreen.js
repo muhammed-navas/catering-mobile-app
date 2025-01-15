@@ -7,46 +7,60 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import {
+  useFonts,
+  Outfit_400Regular,
+  Outfit_500Medium,
+  Outfit_700Bold,
+} from "@expo-google-fonts/outfit";
 import { useNavigation } from "@react-navigation/native";
-import Background from "../components/Background";
+import {Background} from "../components/Background";
 import Icon from "react-native-vector-icons/Feather";
+import Entypo from "react-native-vector-icons/Entypo";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const events = [
   {
-    id: "1",
+    _id: "1",
     name: "Medieval Fair",
-    place: "Castle Grounds",
+    place: "Valluvambram",
+    auditorium: "Family Auditorium Valluvambram",
     totalCount: 500,
     description:
       "Experience the charm of medieval times with authentic food, costumes, and activities.",
   },
   {
-    id: "2",
+    _id: "2",
     name: "Comic Con",
     place: "Convention Center",
+    auditorium: "Family Auditorium Valluvambram",
     totalCount: 10000,
     description:
       "The ultimate gathering for comic book fans, cosplayers, and pop culture enthusiasts.",
   },
   {
-    id: "3",
+    _id: "3",
     name: "Food Festival",
+    auditorium: "Family Auditorium Valluvambram",
     place: "City Park",
     totalCount: 2000,
     description:
       "Savor diverse cuisines from around the world in one delicious event.",
   },
   {
-    id: "4",
+    _id: "4",
     name: "Tech Expo",
+    auditorium: "Family Auditorium Valluvambram",
     place: "Innovation Hub",
     totalCount: 3000,
     description:
       "Discover the latest in technology and gadgets from leading companies.",
   },
   {
-    id: "5",
+    _id: "5",
     name: "Music Festival",
+    auditorium: "Family Auditorium Valluvambram",
     place: "Riverside Amphitheater",
     totalCount: 15000,
     description:
@@ -54,15 +68,55 @@ const events = [
   },
 ];
 
-const EventCard = ({ name, place, totalCount, description }) => {
+const EventCard = ({ name, place, totalCount, description, auditorium }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.card}>
       <View style={styles.cardContent}>
-        <Text style={styles.cardName}>{name}</Text>
-        <Text style={styles.cardPlace}>{place}</Text>
-        <Text style={styles.cardCount}>Total Attendees: {totalCount}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 8,
+            paddingBottom: 6,
+            borderBottomColor: "#80C4E9",
+            borderBottomWidth: 1,
+          }}
+        >
+          <Text style={styles.cardName}>{name}</Text>
+          <Text style={styles.cardPlace}>
+            {" "}
+            <Entypo
+              name="location-pin"
+              size={15}
+              style={{ marginRight: 5 }}
+              color="#777"
+            />
+            {place}
+          </Text>
+        </View>
+        <Text style={styles.venue}>
+          {" "}
+          <FontAwesome
+            name="venus"
+            size={17}
+            color="#777"
+            style={{ marginRight: 5 }}
+          />
+          {auditorium}
+        </Text>
+        <Text style={styles.cardCount}>
+          {" "}
+          <MaterialCommunityIcons
+            name="account-check-outline"
+            size={17}
+            color="#777"
+            style={{ marginRight: 5 }}
+          />
+          Total Attendees: {totalCount}
+        </Text>
         <Text style={styles.cardDescription}>{description}</Text>
         <TouchableOpacity
           style={styles.viewMoreButton}
@@ -77,6 +131,11 @@ const EventCard = ({ name, place, totalCount, description }) => {
 
 const EventScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
+    const [fontsLoaded] = useFonts({
+      Outfit_400Regular,
+      Outfit_500Medium,
+      Outfit_700Bold,
+    });
 
   const filteredEvents = events.filter(
     (event) =>
@@ -88,6 +147,32 @@ const EventScreen = () => {
   return (
     <Background>
       <ScrollView style={styles.container}>
+        <View style={{ flexDirection: "row", gap: 5, marginTop: 60 }}>
+          {[{name:"Total Event",num:5},{name:"Completed Event Slot",num:2},{name:"Balanced Event Slot",num:3}].map((item, i) => (
+            <View
+              style={{
+                width: 70,
+                height: 70,
+                borderColor:"#80C4E9",
+                borderWidth:1,
+                borderRadius: 10,
+                marginBottom: 10,
+                flex: 1,
+                justifyContent: "center", 
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Outfit_400Regular",
+                }}
+              >
+                {item.name} {"\n"} {i === 0 ? events.length : i ===1 ? events.length - 3 :i === 2 ? events.length - 2 : null}
+              </Text>
+            </View>
+          ))}
+        </View>
         <View style={styles.search}>
           <Icon
             name="search"
@@ -95,6 +180,7 @@ const EventScreen = () => {
             color="#777"
             style={styles.searchIcon}
           />
+
           <TextInput
             style={styles.searchInput}
             placeholder="Search..."
@@ -104,7 +190,7 @@ const EventScreen = () => {
           />
         </View>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Upcoming{"\n"}Events</Text>
+          <Text style={styles.headerTitle}>Upcoming Events</Text>
           <Text style={styles.headerSubtitle}>
             Don't miss out on these exciting gatherings!
           </Text>
@@ -113,9 +199,10 @@ const EventScreen = () => {
         <View style={styles.eventsContainer}>
           {filteredEvents.map((event) => (
             <EventCard
-              key={event.id}
+              key={event._id}
               name={event.name}
               place={event.place}
+              auditorium={event.auditorium}
               totalCount={event.totalCount}
               description={event.description}
             />
@@ -129,11 +216,11 @@ const EventScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 60,
+    marginBottom: 80,
     paddingHorizontal: 10,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 20,
   },
   headerTitle: {
     fontSize: 34,
@@ -149,12 +236,12 @@ const styles = StyleSheet.create({
   },
   eventsContainer: {
     // padding: 16,
-
   },
   card: {
-    // backgroundColor: "#A0D683",
+    backgroundColor: "white",
+    opacity:0.7,
     borderColor: "#80C4E9",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 16,
     marginBottom: 16,
     overflow: "hidden",
@@ -167,21 +254,33 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#000000",
     marginBottom: 4,
+    fontFamily: "Outfit_400Regular",
+    flex: 1,
   },
   cardPlace: {
     fontSize: 16,
     color: "#666666",
     marginBottom: 8,
+    fontFamily: "Outfit_400Regular",
+    textAlign: "right",
+    flexShrink: 1,
+  },
+  venue: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontFamily: "Outfit_400Regular",
   },
   cardCount: {
     fontSize: 14,
     color: "#333333",
     marginBottom: 8,
+    fontFamily: "Outfit_400Regular",
   },
   cardDescription: {
     fontSize: 14,
     color: "#666666",
     marginBottom: 16,
+    fontFamily: "Outfit_400Regular",
   },
   viewMoreButton: {
     alignSelf: "flex-end",
@@ -204,7 +303,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderColor: "#80C4E9",
     borderWidth: 1,
-    marginTop: 40,
+    marginTop: 10,
   },
   searchIcon: {
     marginRight: 10,

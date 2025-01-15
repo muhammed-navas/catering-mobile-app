@@ -69,12 +69,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <AntDesign name="home" size={24} color={color} />
           ),
-          // tabBarItemStyle: ({ focused }) => ({
-          //   backgroundColor: focused ? "#000" : "#f5f5f5",
-          //   height: 50,
-          //   // borderRadius: 25,
-          //   marginHorizontal: 5,
-          // }),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            // borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -85,12 +85,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="category" size={24} color={color} />
           ),
-          // tabBarItemStyle: ({ focused }) => ({
-          //   backgroundColor: focused ? "#000" : "#f5f5f5",
-          //   height: 50,
-          //   borderRadius: 25,
-          //   marginHorizontal: 5,
-          // }),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -101,12 +101,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <AntDesign name="star" size={24} color={color} />
           ),
-          // tabBarItemStyle: ({ focused }) => ({
-          //   backgroundColor: focused ? "#000" : "#f5f5f5",
-          //   height: 50,
-          //   borderRadius: 25,
-          //   marginHorizontal: 5,
-          // }),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
       <Tab.Screen
@@ -117,12 +117,12 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <AntDesign name="user" size={24} color={color} />
           ),
-          // tabBarItemStyle: ({ focused }) => ({
-          //   backgroundColor: focused ? "#000" : "#f5f5f5",
-          //   height: 50,
-          //   borderRadius: 25,
-          //   marginHorizontal: 5,
-          // }),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
         }}
       />
     </Tab.Navigator>
