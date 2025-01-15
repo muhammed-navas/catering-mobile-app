@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import Background from "../components/Background";
+import {Background} from "../components/Background";
 
 export default function SplashScreen() {
   return (

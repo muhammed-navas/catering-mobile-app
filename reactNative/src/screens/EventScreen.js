@@ -14,7 +14,7 @@ import {
   Outfit_700Bold,
 } from "@expo-google-fonts/outfit";
 import { useNavigation } from "@react-navigation/native";
-import Background from "../components/Background";
+import {Background} from "../components/Background";
 import Icon from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";

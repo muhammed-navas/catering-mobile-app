@@ -15,7 +15,7 @@ import {
 } from "@expo-google-fonts/outfit";
 import Icon from "react-native-vector-icons/Feather";
 import ImageCarousel from "../components/SlideImage";
-import Background from "../components/Background";
+import {Background} from "../components/Background";
 import DateInHome from "../components/DateInHome";
 
 const HomeScreen = () => {
@@ -73,8 +73,10 @@ const HomeScreen = () => {
               </View>
             ))}
           </View>
-
+          <View >
           <DateInHome />
+          </View>
+
 
           <View style={styles.content}>
             <View style={styles.heroSection}>
@@ -87,7 +89,9 @@ const HomeScreen = () => {
             </View>
 
             <SafeAreaView style={styles.slideCard}>
+              <View >
               <ImageCarousel />
+              </View>
             </SafeAreaView>
           </View>
         </ScrollView>
