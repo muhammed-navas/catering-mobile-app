@@ -130,6 +130,9 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 40,
     borderColor: "#80C4E9",
+    // backgroundColor: "white",
+    // opacity: 0.5,
+
     borderWidth: 1,
     height: 250,
   },
