@@ -72,7 +72,7 @@ function TabNavigator() {
           tabBarItemStyle: ({ focused }) => ({
             backgroundColor: focused ? "#000" : "#f5f5f5",
             height: 50,
-            // borderRadius: 25,
+            borderRadius: 25,
             marginHorizontal: 5,
           }),
         }}

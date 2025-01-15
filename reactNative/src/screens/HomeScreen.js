@@ -103,7 +103,8 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 40,
     borderColor: "#80C4E9",
-    // backgroundColor: "white",
+    backgroundColor: "gray",
     // opacity: 0.5,
 
     borderWidth: 1,
