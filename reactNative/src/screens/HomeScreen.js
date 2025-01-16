@@ -69,12 +69,21 @@ const [fontsLoaded] = useFonts({
           </View>
 
           <View style={styles.cards}>
-            {[1, 2].map((_, index) => (
+            {/* {[1, 2].map((_, index) => (
               <View key={index} style={styles.middle}>
                 <Text style={styles.cardTitle}>Wedding Event</Text>
                 <View style={styles.place}>
                   <Text style={styles.cardText}>Malappuram</Text>
                   <Text style={styles.cardText}>Total Count: 20</Text>
+                </View>
+              </View>
+            ))} */}
+            {[1, 2].map((_, index) => (
+              <View key={index} style={styles.middle}>
+                  <Text style={styles.cardText}> 20</Text>
+                <View style={styles.place}>
+                <Text style={styles.cardTitle}>Wedding Event</Text>
+                  <Text style={styles.cardText2}>Malappuram</Text>
                 </View>
               </View>
             ))}
@@ -176,8 +185,8 @@ const styles = StyleSheet.create({
   cards: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 15,
-    marginVertical: 15,
+    gap: 10,
+    marginVertical: 10,
   },
   middle: {
     flex: 1,
@@ -187,20 +196,31 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 15,
     justifyContent: "space-between",
+    alignItems: "center",
+    // gap:6,
+    flexDirection: "row",
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "rubik_500Medium",
-    textAlign: "center",
-    marginBottom: 10,
+    // textAlign: "center",
+    // marginBottom: 10,
   },
   place: {
-    alignItems: "center",
+    // alignItems: "center",
+    // flexDirection:"row",
+    // justifyContent: "space-between",
   },
   cardText: {
+    fontSize: 30,
+    fontFamily: "rubik_500Medium",
+    // textAlign: "center",
+  },
+  cardText2: {
     fontSize: 14,
     fontFamily: "rubik_400Regular",
-    textAlign: "center",
+    // marginRight:10,
+    // textAlign: "center",
   },
   slideCard: {
     width: "100%",
