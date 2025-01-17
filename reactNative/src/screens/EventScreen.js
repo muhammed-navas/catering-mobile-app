@@ -6,13 +6,21 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Button,
 } from "react-native";
+// import {
+//   useFonts,
+//   Outfit_400Regular,
+//   Outfit_500Medium,
+//   Outfit_700Bold,
+// } from "@expo-google-fonts/outfit";
 import {
   useFonts,
-  Outfit_400Regular,
-  Outfit_500Medium,
-  Outfit_700Bold,
-} from "@expo-google-fonts/outfit";
+  rubik_100Thin,
+  rubik_400Regular,
+  rubik_500Medium,
+  rubik_700Bold,
+} from "@expo-google-fonts/rubik";
 import { useNavigation } from "@react-navigation/native";
 // import {Background} from "../components/Background";
 import Icon from "react-native-vector-icons/Feather";
@@ -81,10 +89,8 @@ const EventCard = ({ name, place, totalCount, description, auditorium }) => {
             alignItems: "center",
             marginBottom: 8,
             paddingBottom: 6,
-            backgroundColor: "#e6e4e1",
-            borderBottomColor: "#80C4E9",
+            borderBottomColor: "#bebfc2",
             borderBottomWidth: 1,
-           
           }}
         >
           <Text style={styles.cardName}>{name}</Text>
@@ -126,6 +132,7 @@ const EventCard = ({ name, place, totalCount, description, auditorium }) => {
         >
           <Text style={styles.viewMoreText}>View More</Text>
         </TouchableOpacity>
+        
       </View>
     </View>
   );
@@ -133,11 +140,17 @@ const EventCard = ({ name, place, totalCount, description, auditorium }) => {
 
 const EventScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
-    const [fontsLoaded] = useFonts({
-      Outfit_400Regular,
-      Outfit_500Medium,
-      Outfit_700Bold,
-    });
+  // const [fontsLoaded] = useFonts({
+  //   Outfit_400Regular,
+  //   Outfit_500Medium,
+  //   Outfit_700Bold,
+  // });
+  const [fontsLoaded] = useFonts({
+    rubik_100Thin,
+    rubik_400Regular,
+    rubik_500Medium,
+    rubik_700Bold,
+  });
 
   const filteredEvents = events.filter(
     (event) =>
@@ -226,13 +239,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: 80,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "white",
   },
   header: {
     paddingTop: 20,
   },
   headerTitle: {
-    fontSize: 34,
+    fontSize: 28,
     fontWeight: "700",
     color: "#000000",
     marginBottom: 8,
@@ -263,33 +277,33 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#000000",
     marginBottom: 4,
-    fontFamily: "Outfit_400Regular",
+    fontWeight: "700",
+    fontFamily: "rubik_400Regular",
     flex: 1,
   },
   cardPlace: {
     fontSize: 16,
-    color: "#666666",
+    fontWeight: "700",
     marginBottom: 8,
-    fontFamily: "Outfit_400Regular",
+    fontFamily: "rubik_400Regular",
     textAlign: "right",
     flexShrink: 1,
   },
   venue: {
     fontSize: 16,
     marginBottom: 8,
-    fontFamily: "Outfit_400Regular",
+    fontWeight: "700",
+    fontFamily: "rubik_400Regular",
   },
   cardCount: {
     fontSize: 14,
-    color: "#333333",
     marginBottom: 8,
-    fontFamily: "Outfit_400Regular",
+    fontFamily: "rubik_400Regular",
   },
   cardDescription: {
     fontSize: 14,
-    color: "#666666",
     marginBottom: 16,
-    fontFamily: "Outfit_400Regular",
+    fontFamily: "rubik_400Regular",
   },
   viewMoreButton: {
     alignSelf: "flex-end",
@@ -299,7 +313,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   viewMoreText: {
-    color: "#FFFFFF",
+    color: "white",
     fontSize: 14,
     fontWeight: "600",
   },
@@ -309,7 +323,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 45,
     paddingHorizontal: 15,
-    paddingVertical:15,
+    paddingVertical: 15,
     borderColor: "#80C4E9",
     borderWidth: 1,
     marginTop: 10,
@@ -319,7 +333,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontFamily: "Outfit_400Regular",
+    fontFamily: "rubik_400Regular",
     fontSize: 16,
     color: "#000",
     padding: 0,

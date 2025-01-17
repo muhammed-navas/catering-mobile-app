@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput , ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import ConformPopup from "../components/ConformPopup";
@@ -126,11 +126,7 @@ const ServiceCard = ({ title, icon, count, backgroundColor }) => {
 
 const EventDetails = ({ navigation }) => {
   const dates = getCurrentDate();
-  const chartData = [
-    { month: dates.twoMonthsAgo, requests: 123, color: "#D9ED92" },
-    { month: dates.previous, requests: 97, color: "orange" },
-    { month: dates.current, requests: 174, color: "#5B9BF7" },
-  ];
+
 
   return (
     <ScrollView style={styles.container}>
@@ -147,26 +143,16 @@ const EventDetails = ({ navigation }) => {
       />
       {/* <Text style={styles.headerTitle}>Employment chart</Text> */}
 
-      <View style={styles.chartContainer}>
-        {chartData.map((item, index) => (
-          <View key={index} style={styles.monthColumn}>
-            <View
-              style={[
-                styles.bar,
-                { backgroundColor: item.color, height: item.requests },
-              ]}
-            />
-            <View style={styles.monthInfo}>
-              <Icon
-                name="circle"
-                size={8}
-                color={item.color === "#FFFFFF" ? "#000" : item.color}
-              />
-              <Text style={styles.monthText}>{item.month}</Text>
-              <Text style={styles.requestText}>{item.requests} requests</Text>
-            </View>
-          </View>
-        ))}
+  <View style={styles.search}>
+        <Icon name="search" size={20} color="#777" style={styles.searchIcon} />
+
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search..."
+          // value={searchQuery}
+          // onChangeText={setSearchQuery}
+          placeholderTextColor="#777"
+        />
       </View>
 
       <View style={styles.footer}>
@@ -193,8 +179,8 @@ const EventDetails = ({ navigation }) => {
       </View>
 
       <View style={styles.grid}>
-        {servicesItems.map((service) => (
-          <ServiceCard key={service.id} {...service} />
+        {servicesItems.map((service,i) => (
+          <ServiceCard key={i} {...service} />
         ))}
       </View>
     </ScrollView>
@@ -315,6 +301,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500",
   },
+  // ...............................
+  search: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 45,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderColor: "#80C4E9",
+    borderWidth: 1,
+    marginTop: 10,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontFamily: "rubik_400Regular",
+    fontSize: 16,
+    color: "#000",
+    padding: 0,
+  },
+  // ...............................
 });
 
 export default EventDetails;
