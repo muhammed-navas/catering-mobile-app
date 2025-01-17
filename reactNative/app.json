@@ -4,7 +4,7 @@
     "slug": "reactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "https://cdn-icons-png.flaticon.com/128/9099/9099152.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {

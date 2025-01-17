@@ -14,7 +14,7 @@ import {
   Outfit_700Bold,
 } from "@expo-google-fonts/outfit";
 import { useNavigation } from "@react-navigation/native";
-import {Background} from "../components/Background";
+// import {Background} from "../components/Background";
 import Icon from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -81,8 +81,10 @@ const EventCard = ({ name, place, totalCount, description, auditorium }) => {
             alignItems: "center",
             marginBottom: 8,
             paddingBottom: 6,
+            backgroundColor: "#e6e4e1",
             borderBottomColor: "#80C4E9",
             borderBottomWidth: 1,
+           
           }}
         >
           <Text style={styles.cardName}>{name}</Text>
@@ -145,71 +147,78 @@ const EventScreen = () => {
   );
 
   return (
-    <Background>
-      <ScrollView style={styles.container}>
-        <View style={{ flexDirection: "row", gap: 5, marginTop: 60 }}>
-          {[{name:"Total Event",num:5},{name:"Completed Event Slot",num:2},{name:"Balanced Event Slot",num:3}].map((item, i) => (
-            <View
+    // <Background>
+    <ScrollView style={styles.container}>
+      <View style={{ flexDirection: "row", gap: 5, marginTop: 60 }}>
+        {[
+          { name: "Total Event", num: 5 },
+          { name: "Completed Event Slot", num: 2 },
+          { name: "Balanced Event Slot", num: 3 },
+        ].map((item, i) => (
+          <View
+            style={{
+              width: 70,
+              height: 70,
+              // borderColor: "#80C4E9",
+              backgroundColor: "#e6e4e1",
+              // borderWidth: 1,
+              borderRadius: 10,
+              marginBottom: 10,
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
               style={{
-                width: 70,
-                height: 70,
-                borderColor:"#80C4E9",
-                borderWidth:1,
-                borderRadius: 10,
-                marginBottom: 10,
-                flex: 1,
-                justifyContent: "center", 
-                alignItems: "center",
+                textAlign: "center",
+                fontFamily: "Outfit_400Regular",
               }}
             >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Outfit_400Regular",
-                }}
-              >
-                {item.name} {"\n"} {i === 0 ? events.length : i ===1 ? events.length - 3 :i === 2 ? events.length - 2 : null}
-              </Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.search}>
-          <Icon
-            name="search"
-            size={20}
-            color="#777"
-            style={styles.searchIcon}
-          />
+              {item.name} {"\n"}{" "}
+              {i === 0
+                ? events.length
+                : i === 1
+                ? events.length - 3
+                : i === 2
+                ? events.length - 2
+                : null}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <View style={styles.search}>
+        <Icon name="search" size={20} color="#777" style={styles.searchIcon} />
 
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholderTextColor="#777"
-          />
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Upcoming Events</Text>
-          <Text style={styles.headerSubtitle}>
-            Don't miss out on these exciting gatherings!
-          </Text>
-        </View>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholderTextColor="#777"
+        />
+      </View>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Upcoming Events</Text>
+        <Text style={styles.headerSubtitle}>
+          Don't miss out on these exciting gatherings!
+        </Text>
+      </View>
 
-        <View style={styles.eventsContainer}>
-          {filteredEvents.map((event) => (
-            <EventCard
-              key={event._id}
-              name={event.name}
-              place={event.place}
-              auditorium={event.auditorium}
-              totalCount={event.totalCount}
-              description={event.description}
-            />
-          ))}
-        </View>
-      </ScrollView>
-    </Background>
+      <View style={styles.eventsContainer}>
+        {filteredEvents.map((event) => (
+          <EventCard
+            key={event._id}
+            name={event.name}
+            place={event.place}
+            auditorium={event.auditorium}
+            totalCount={event.totalCount}
+            description={event.description}
+          />
+        ))}
+      </View>
+    </ScrollView>
+    // </Background>
   );
 };
 
@@ -238,10 +247,10 @@ const styles = StyleSheet.create({
     // padding: 16,
   },
   card: {
-    backgroundColor: "white",
-    opacity:0.7,
-    borderColor: "#80C4E9",
-    borderWidth: 1,
+    backgroundColor: "#e6e4e1",
+    opacity: 0.7,
+    // borderColor: "#80C4E9",
+    // borderWidth: 1,
     borderRadius: 16,
     marginBottom: 16,
     overflow: "hidden",
@@ -300,7 +309,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 45,
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical:15,
     borderColor: "#80C4E9",
     borderWidth: 1,
     marginTop: 10,
