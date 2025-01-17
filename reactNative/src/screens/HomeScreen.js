@@ -13,10 +13,16 @@ import {
 //   Outfit_500Medium,
 //   Outfit_700Bold,
 // } from "@expo-google-fonts/outfit";
-import { useFonts, rubik_100Thin, rubik_400Regular, rubik_500Medium, rubik_700Bold } from "@expo-google-fonts/rubik";
+// import {
+//   useFonts,
+//   rubik_100Thin,
+//   rubik_400Regular,
+//   rubik_500Medium,
+//   rubik_700Bold,
+// } from "@expo-google-fonts/rubik";
 import Icon from "react-native-vector-icons/Feather";
 import ImageCarousel from "../components/SlideImage";
-import {Background} from "../components/Background";
+import { Background } from "../components/Background";
 import DateInHome from "../components/DateInHome";
 
 const HomeScreen = () => {
@@ -25,15 +31,15 @@ const HomeScreen = () => {
   //   Outfit_500Medium,
   //   Outfit_700Bold,
   // });
-const [fontsLoaded] = useFonts({
-  rubik_100Thin,
-  rubik_400Regular,
-  rubik_500Medium,
-  rubik_700Bold,
-});
-  if (!fontsLoaded) {
-    return null; // or a loading indicator
-  }
+  // const [fontsLoaded] = useFonts({
+  //   rubik_100Thin,
+  //   rubik_400Regular,
+  //   rubik_500Medium,
+  //   rubik_700Bold,
+  // });
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <Background>
@@ -44,10 +50,15 @@ const [fontsLoaded] = useFonts({
         >
           <View style={styles.cardSome}>
             <View style={styles.header}>
-              <TouchableOpacity style={styles.round}>
-                <Icon name="user" size={24} color="#333" />
-              </TouchableOpacity>
-              <Text style={styles.headerTitle}>THE ROUNDS</Text>
+              <View style={styles.roundRow}>
+                <TouchableOpacity style={styles.round}>
+                  <Icon name="user" size={24} color="#333" />
+                </TouchableOpacity>
+                <View>
+                <Text style={styles.headerTitle}>muhammed navas</Text>
+                <Text style={styles.headerTitle1}>+ 91 9087687654</Text>
+                </View>
+              </View>
               <TouchableOpacity style={styles.round}>
                 <Icon name="bell" size={24} color="#333" />
               </TouchableOpacity>
@@ -80,18 +91,17 @@ const [fontsLoaded] = useFonts({
             ))} */}
             {[1, 2].map((_, index) => (
               <View key={index} style={styles.middle}>
-                  <Text style={styles.cardText}> 20</Text>
+                <Text style={styles.cardText}> 20</Text>
                 <View style={styles.place}>
-                <Text style={styles.cardTitle}>Wedding Event</Text>
+                  <Text style={styles.cardTitle}>Wedding Event</Text>
                   <Text style={styles.cardText2}>Malappuram</Text>
                 </View>
               </View>
             ))}
           </View>
-          <View >
-          <DateInHome />
+          <View>
+            <DateInHome />
           </View>
-
 
           <View style={styles.content}>
             <View style={styles.heroSection}>
@@ -104,8 +114,8 @@ const [fontsLoaded] = useFonts({
             </View>
 
             <SafeAreaView style={styles.slideCard}>
-              <View >
-              <ImageCarousel />
+              <View>
+                <ImageCarousel />
               </View>
             </SafeAreaView>
           </View>
@@ -136,9 +146,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  roundRow:{
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap:9,
+  },
   headerTitle: {
     fontSize: 18,
-    fontFamily: "rubik_700Bold",
+    // fontFamily: "rubik_700Bold",
+    letterSpacing: 1,
+  },
+  headerTitle1: {
+    fontSize: 14,
+    // fontFamily: "rubik_700Bold",
     letterSpacing: 1,
   },
   content: {
@@ -149,18 +170,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 20,
     marginTop: 40,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     // borderColor: "#80C4E9",
     backgroundColor: "#e6e4e1",
     // opacity: 0.5,
 
     // borderWidth: 1,
-    height: 250,
+    height: 260,
   },
   dreamContainer: {
     marginBottom: 20,
   },
   dream: {
-    fontFamily: "rubik_500Medium",
+    // fontFamily: "rubik_500Medium",
     fontSize: 25,
     lineHeight: 36,
     color: "#333",
@@ -178,7 +201,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   searchPlaceholder: {
-    fontFamily: "rubik_400Regular",
+    // fontFamily: "rubik_400Regular",
     color: "#777",
     fontSize: 16,
   },
@@ -195,14 +218,14 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     borderRadius: 15,
     padding: 15,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
     // gap:6,
     flexDirection: "row",
   },
   cardTitle: {
     fontSize: 18,
-    fontFamily: "rubik_500Medium",
+    // fontFamily: "rubik_500Medium",
     // textAlign: "center",
     // marginBottom: 10,
   },
@@ -213,12 +236,12 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 30,
-    fontFamily: "rubik_500Medium",
+    // fontFamily: "rubik_500Medium",
     // textAlign: "center",
   },
   cardText2: {
     fontSize: 14,
-    fontFamily: "rubik_400Regular",
+    // fontFamily: "rubik_400Regular",
     // marginRight:10,
     // textAlign: "center",
   },
@@ -232,7 +255,7 @@ const styles = StyleSheet.create({
   heroTitle: {
     fontSize: 32,
     lineHeight: 40,
-    fontFamily: "rubik_500Medium",
+    // fontFamily: "rubik_500Medium",
     color: "#333",
     marginBottom: 10,
   },
@@ -240,7 +263,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: "#666",
-    fontFamily: "rubik_400Regular",
+    // fontFamily: "rubik_400Regular",
   },
 });
 
