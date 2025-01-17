@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  roundRow:{
+  roundRow: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap:9,
+    gap: 9,
   },
   headerTitle: {
     fontSize: 18,
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 20,
     marginTop: 40,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flexDirection: "column",
+    justifyContent: "space-between",
     // borderColor: "#80C4E9",
     backgroundColor: "#e6e4e1",
     // opacity: 0.5,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 15,
     // justifyContent: "space-between",
     alignItems: "center",
-    gap:6,
+    gap: 6,
     flexDirection: "row",
   },
   cardTitle: {

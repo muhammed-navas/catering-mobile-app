@@ -180,7 +180,7 @@ export default function App() {
       <StatusBar
         barStyle="dark-content"
         translucent={true}
-        backgroundColor="transparent"
+        backgroundColor="white"
       />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* {isLoading ? (
