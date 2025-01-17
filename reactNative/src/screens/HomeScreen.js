@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 15,
     // justifyContent: "space-between",
     alignItems: "center",
-    // gap:6,
+    gap:6,
     flexDirection: "row",
   },
   cardTitle: {

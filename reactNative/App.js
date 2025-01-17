@@ -78,22 +78,6 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="CategoryTab"
-        component={CategoryScreen}
-        options={{
-          tabBarLabel: "Category",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="category" size={24} color={color} />
-          ),
-          tabBarItemStyle: ({ focused }) => ({
-            backgroundColor: focused ? "#000" : "#f5f5f5",
-            height: 50,
-            borderRadius: 25,
-            marginHorizontal: 5,
-          }),
-        }}
-      />
-      <Tab.Screen
         name="EventTab"
         component={EventScreen}
         options={{
@@ -109,6 +93,23 @@ function TabNavigator() {
           }),
         }}
       />
+      <Tab.Screen
+        name="My Event"
+        component={CategoryScreen}
+        options={{
+          tabBarLabel: "My Event",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="category" size={24} color={color} />
+          ),
+          tabBarItemStyle: ({ focused }) => ({
+            backgroundColor: focused ? "#000" : "#f5f5f5",
+            height: 50,
+            borderRadius: 25,
+            marginHorizontal: 5,
+          }),
+        }}
+      />
+
       <Tab.Screen
         name="ProfileTab"
         component={ProfileScreen}
@@ -166,13 +167,13 @@ const styles = StyleSheet.create({
 
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 3000);
+  // }, []);
 
   return (
     <NavigationContainer>
@@ -182,18 +183,18 @@ export default function App() {
         backgroundColor="transparent"
       />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isLoading ? (
+        {/* {isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
         ) : (
-          <>
+          <> */}
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="MainApp" component={TabNavigator} />
             <Stack.Screen name="EventDetails" component={EventDetails} />
             <Stack.Screen name="ConformPopup" component={ConformPopup} />
-          </>
-        )}
+          {/* </>
+        )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );
