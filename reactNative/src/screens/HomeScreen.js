@@ -55,8 +55,8 @@ const HomeScreen = () => {
                   <Icon name="user" size={24} color="#333" />
                 </TouchableOpacity>
                 <View>
-                <Text style={styles.headerTitle}>muhammed navas</Text>
-                <Text style={styles.headerTitle1}>+ 91 9087687654</Text>
+                  <Text style={styles.headerTitle}>muhammed navas</Text>
+                  <Text style={styles.headerTitle1}>+ 91 9087687654</Text>
                 </View>
               </View>
               <TouchableOpacity style={styles.round}>
@@ -80,26 +80,6 @@ const HomeScreen = () => {
           </View>
 
           <View style={styles.cards}>
-            {/* {[1, 2].map((_, index) => (
-              <View key={index} style={styles.middle}>
-                <Text style={styles.cardTitle}>Wedding Event</Text>
-                <View style={styles.place}>
-                  <Text style={styles.cardText}>Malappuram</Text>
-                  <Text style={styles.cardText}>Total Count: 20</Text>
-                </View>
-              </View>
-            ))} */}
-            {[1, 2].map((_, index) => (
-              <View key={index} style={styles.middle}>
-                <Text style={styles.cardText}> 20</Text>
-                <View style={styles.place}>
-                  <Text style={styles.cardTitle}>Wedding Event</Text>
-                  <Text style={styles.cardText2}>Malappuram</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-          <View>
             <DateInHome />
           </View>
 
@@ -206,10 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cards: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 10,
-    marginVertical: 10,
+    marginVertical: 15,
   },
   middle: {
     flex: 1,
