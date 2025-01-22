@@ -1,132 +1,104 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput , ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import Entypo from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 import ConformPopup from "../components/ConformPopup";
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import {
+  useFonts,
+  rubik_100Thin,
+  rubik_400Regular,
+  rubik_500Medium,
+  rubik_700Bold,
+} from "@expo-google-fonts/rubik";
 
 const servicesItems = [
   {
     id: 1,
-    title: "Engine Oil",
-    icon: "build",
+    title: "welcome Drinks",
+    icon: <Entypo name="drink" size={24} />,
     count: 0,
-    backgroundColor: "#F5F5F5",
   },
   {
     id: 2,
-    title: "Radiator Fluid",
+    title: "Suppliers",
     icon: "opacity",
     count: 0,
     backgroundColor: "#0052FF",
   },
   {
     id: 3,
-    title: "Battery",
+    title: "VIP Section",
     icon: "battery-full",
     count: 0,
-    backgroundColor: "#F5F5F5",
   },
   {
     id: 4,
-    title: "Washer Fluid",
+    title: "Cleaners",
     icon: "opacity",
     count: 0,
-    backgroundColor: "#F5F5F5",
   },
   {
     id: 4,
-    title: "Washer Fluid",
+    title: "Managers",
     icon: "opacity",
     count: 0,
-    backgroundColor: "#F5F5F5",
   },
   {
     id: 4,
-    title: "Washer Fluid",
+    title: "Decoration",
     icon: "opacity",
     count: 0,
-    backgroundColor: "#F5F5F5",
   },
 ];
-const getCurrentDate = () => {
-    const now = new Date();
-    return {
-        current: months[now.getMonth()],
-        previous: months[(now.getMonth() - 1 + 12) % 12],
-        twoMonthsAgo: months[(now.getMonth() - 2 + 12) % 12],
-    };
-};
 
 const ServiceCard = ({ title, icon, count, backgroundColor }) => {
-        const [isOpen,setIsOpen] = useState(false)
-          const handleOpenPopup = () => setIsOpen(true);
-          const handleClosePopup = () => setIsOpen(false);
-          const handleSubmit = () => {
-            // Handle submit logic here
-            setIsOpen(false); // Close popup after submission
-          };
-    return (
-      <>
-        <TouchableOpacity
-          onPress={() => setIsOpen(true)}
-          style={[styles.card, { backgroundColor }]}
-        >
-          <Icon
-            name={icon}
-            size={24}
-            color={backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000"}
-            style={styles.cardIcon}
+  const navigation = useNavigation();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenPopup = () => setIsOpen(true);
+  const handleClosePopup = () => setIsOpen(false);
+  const handleSubmit = () => {
+    // Handle submit logic here
+    navigation.navigate("MainApp", {
+      screen: "My Event",
+    });
+    setIsOpen(false);
+  };
+  return (
+    <>
+      <TouchableOpacity onPress={() => setIsOpen(true)} style={styles.card}>
+        <View style={styles.cardIcon}>{icon}</View>
+        <Text style={styles.cardTitle}>{title}</Text>
+        <View style={styles.countContainer}>
+          <Text style={styles.count}>{count}</Text>
+        </View>
+        {isOpen && (
+          <ConformPopup
+            isOpen={isOpen}
+            onClose={handleClosePopup}
+            onSubmit={handleSubmit}
           />
-          <Text
-            style={[
-              styles.cardTitle,
-              { color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000" },
-            ]}
-          >
-            {title}
-          </Text>
-          <View style={styles.countContainer}>
-            <Text
-              style={[
-                styles.count,
-                {
-                  color: backgroundColor === "#0052FF" ? "#FFFFFF" : "#000000",
-                },
-              ]}
-            >
-              {count}
-            </Text>
-          </View>
-          {isOpen && (
-            <ConformPopup
-              isOpen={isOpen}
-              onClose={handleClosePopup}
-              onSubmit={handleSubmit}
-            />
-          )}
-        </TouchableOpacity>
-      </>
-    );
-}
+        )}
+      </TouchableOpacity>
+    </>
+  );
+};
 
 const EventDetails = ({ navigation }) => {
-  const dates = getCurrentDate();
-
+   const [fontsLoaded] = useFonts({
+      rubik_100Thin,
+      rubik_400Regular,
+      rubik_500Medium,
+      rubik_700Bold,
+    });
 
   return (
     <ScrollView style={styles.container}>
@@ -139,11 +111,11 @@ const EventDetails = ({ navigation }) => {
         name="chevron-left"
         size={40}
         color="black"
-        style={{ marginBottom: 30 }}
+        style={{ marginBottom: 10 }}
       />
       {/* <Text style={styles.headerTitle}>Employment chart</Text> */}
 
-  <View style={styles.search}>
+      <View style={styles.search}>
         <Icon name="search" size={20} color="#777" style={styles.searchIcon} />
 
         <TextInput
@@ -155,31 +127,17 @@ const EventDetails = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.footer}>
-        <View style={styles.emoji}>
-          <Text style={styles.footerText}>How Are You Feel Today ?</Text>
-          <View style={styles.emojiBg}>
-            <Text style={styles.emojiStyle}>😁</Text>
-            <Text style={styles.emojiStyle}>😊</Text>
-            <Text style={styles.emojiStyle}>😌</Text>
-            <Text style={styles.emojiStyle}>😍</Text>
-            <Text style={styles.emojiStyle}>😜</Text>
-            <Text style={styles.emojiStyle}>😪</Text>
-          </View>
-        </View>
-      </View>
       <View style={styles.feel}>
-        <View style={styles.footerContent}>
-          <Icon name="trending-up" size={20} color="white" />
-          <Text style={[styles.footerText, { color: "white" }]}>
-            Choose Your Working Category
-          </Text>
-          {/* <Icon name="chevron-right" size={20} color="#000" /> */}
-        </View>
+        <Text style={styles.textHead}>Choose Your Category</Text>
+        <Text style={styles.textPhara}>
+          Explore exciting events in our working category! Join upcoming
+          webinars, workshops, and more. Click below to register or set a
+          reminder for your favorite events.
+        </Text>
       </View>
 
       <View style={styles.grid}>
-        {servicesItems.map((service,i) => (
+        {servicesItems.map((service, i) => (
           <ServiceCard key={i} {...service} />
         ))}
       </View>
@@ -190,8 +148,9 @@ const EventDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 15,
     backgroundColor: "#FFFFFF",
+    marginTop: 30,
   },
   headerTitle: {
     fontSize: 18,
@@ -227,19 +186,28 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   footer: {
-    borderTopWidth: 1,
-    borderTopColor: "#d3d6de",
     paddingTop: 15,
     marginTop: 10,
   },
   feel: {
     padding: 10,
   },
+  textHead: {
+    fontSize: 21,
+    fontWeight: "800",
+    fontFamily: "rubik_700Bold",
+  },
+  textPhara: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginVertical: 10,
+    fontFamily: "rubik_700Bold",
+  },
   footerContent: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "black",
+    backgroundColor: "#e6e4e1",
     padding: 12,
     borderRadius: 12,
   },
@@ -278,19 +246,21 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    backgroundColor: "#e6e4e1",
+    // elevation: 2,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
   },
   cardIcon: {
     marginBottom: 12,
   },
   cardTitle: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 16,
     textAlign: "center",
+    fontWeight: "900",
+    fontFamily: "rubik_700Bold",
   },
   countContainer: {
     position: "absolute",

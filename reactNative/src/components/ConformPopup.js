@@ -11,9 +11,9 @@ const ConformPopup = ({ isOpen, onClose, onSubmit }) => {
     >
       <View style={styles.container}>
         <View style={styles.content}>
-          <Text style={styles.title}>PRO PLAN</Text>
+          <Text style={styles.title}>Are You Sure</Text>
           <Text style={styles.description}>
-            Gain access to our curated collection of insider tips & more...
+           Your confort in this sesstion attending then click sumbit 
           </Text>
 
           <View style={styles.buttonContainer}>
@@ -22,7 +22,7 @@ const ConformPopup = ({ isOpen, onClose, onSubmit }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
-              <Text style={styles.buttonText}>Try Pro Plan</Text>
+              <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -36,13 +36,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.4)", // Semi-transparent background
   },
   content: {
     backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    elevation: 5, // Add shadow for better visual separation
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 20,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: 200,
+    width:"90%",
+    elevation: 15, 
   },
   title: {
     fontSize: 20,
@@ -57,21 +61,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   cancelButton: {
-    flex: 1,
     padding: 10,
-    backgroundColor: "#ddd",
+    // backgroundColor: "#ddd",
+    backgroundColor: "#e6e4e1",
     borderRadius: 5,
     alignItems: "center",
   },
   submitButton: {
-    flex: 1,
     padding: 10,
-    backgroundColor: "#f0c000", // Orange button color
+    // backgroundColor: "#f0c000",
+    backgroundColor: "#e6e4e1",
     borderRadius: 5,
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: "black",
     fontSize: 16,
   },
 });

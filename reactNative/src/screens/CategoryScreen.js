@@ -1,23 +1,269 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Button,
+} from "react-native";
+// import {
+//   useFonts,
+//   Outfit_400Regular,
+//   Outfit_500Medium,
+//   Outfit_700Bold,
+// } from "@expo-google-fonts/outfit";
+import {
+  useFonts,
+  rubik_100Thin,
+  rubik_400Regular,
+  rubik_500Medium,
+  rubik_700Bold,
+} from "@expo-google-fonts/rubik";
+import { useNavigation } from "@react-navigation/native";
+// import {Background} from "../components/Background";
+import Icon from "react-native-vector-icons/Feather";
+import Entypo from "react-native-vector-icons/Entypo";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function CategoryScreen() {
+const events = [
+  {
+    _id: "1",
+    name: "Medieval Fair",
+    place: "Valluvambram",
+    auditorium: "Family Auditorium Valluvambram",
+    totalCount: 500,
+    description:
+      "Experience the charm of medieval times with authentic food, costumes, and activities.",
+  },
+  {
+    _id: "2",
+    name: "Comic Con",
+    place: "Convention Center",
+    auditorium: "Family Auditorium Valluvambram",
+    totalCount: 10000,
+    description:
+      "The ultimate gathering for comic book fans, cosplayers, and pop culture enthusiasts.",
+  },
+];
+
+const EventCard = ({ name, place, totalCount, description, auditorium }) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Category Page</Text>
+    <View style={styles.card}>
+      <View style={styles.cardContent}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 8,
+            paddingBottom: 6,
+            borderBottomColor: "#bebfc2",
+            borderBottomWidth: 1,
+          }}
+        >
+          <Text style={styles.cardName}>{name}</Text>
+          <Text style={styles.cardPlace}>
+            {" "}
+            <Entypo
+              name="location-pin"
+              size={15}
+              style={{ marginRight: 5 }}
+              color="#777"
+            />
+            {place}
+          </Text>
+        </View>
+        <Text style={styles.venue}>
+          {" "}
+          <FontAwesome
+            name="venus"
+            size={17}
+            color="#777"
+            style={{ marginRight: 5 }}
+          />
+          {auditorium}
+        </Text>
+        <Text style={styles.cardCount}>
+          {" "}
+          <MaterialCommunityIcons
+            name="account-check-outline"
+            size={17}
+            color="#777"
+            style={{ marginRight: 5 }}
+          />
+          Total Attendees: {totalCount}
+        </Text>
+        <Text style={styles.cardDescription}>{description}</Text>
+        <TouchableOpacity
+          style={styles.viewMoreButton}
+          onPress={() => navigation.navigate("EventDetails")}
+        >
+          <Text style={styles.viewMoreText}>View More</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
+};
+
+const EventScreen = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  // const [fontsLoaded] = useFonts({
+  //   Outfit_400Regular,
+  //   Outfit_500Medium,
+  //   Outfit_700Bold,
+  // });
+  const [fontsLoaded] = useFonts({
+    rubik_100Thin,
+    rubik_400Regular,
+    rubik_500Medium,
+    rubik_700Bold,
+  });
+
+  const filteredEvents = events.filter(
+    (event) =>
+      event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.place.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    // <Background>
+    <ScrollView style={styles.container}>
+
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Your Events</Text>
+        <Text style={styles.headerSubtitle}>
+          Enjoy Your Evens
+        </Text>
+      </View>
+
+      <View style={styles.eventsContainer}>
+        {filteredEvents.map((event) => (
+          <EventCard
+            key={event._id}
+            name={event.name}
+            place={event.place}
+            auditorium={event.auditorium}
+            totalCount={event.totalCount}
+            description={event.description}
+          />
+        ))}
+      </View>
+    </ScrollView>
+    // </Background>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    marginBottom: 80,
+    paddingHorizontal: 15,
+    backgroundColor: "white",
+    marginTop: 30,
+  },
+  header: {
+    paddingTop: 20,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#000000",
+    marginBottom: 8,
+    lineHeight: 40,
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: "#666666",
+    marginBottom: 24,
+  },
+  eventsContainer: {
+    // padding: 16,
+  },
+  card: {
+    backgroundColor: "#e6e4e1",
+    opacity: 0.7,
+    // borderColor: "#80C4E9",
+    // borderWidth: 1,
+    borderRadius: 16,
+    marginBottom: 16,
+    overflow: "hidden",
+  },
+  cardContent: {
+    padding: 16,
+  },
+  cardName: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#000000",
+    marginBottom: 4,
+    fontWeight: "700",
+    fontFamily: "rubik_400Regular",
+    flex: 1,
+  },
+  cardPlace: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginBottom: 8,
+    fontFamily: "rubik_400Regular",
+    textAlign: "right",
+    flexShrink: 1,
+  },
+  venue: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: "700",
+    fontFamily: "rubik_400Regular",
+  },
+  cardCount: {
+    fontSize: 14,
+    marginBottom: 8,
+    fontFamily: "rubik_400Regular",
+  },
+  cardDescription: {
+    fontSize: 14,
+    marginBottom: 16,
+    fontFamily: "rubik_400Regular",
+  },
+  viewMoreButton: {
+    alignSelf: "flex-end",
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+  viewMoreText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  // ...............................
+  search: {
+    flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4A0080",
+    borderRadius: 45,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderColor: "#80C4E9",
+    borderWidth: 1,
+    marginTop: 10,
   },
-  text: {
-    fontSize: 24,
-    color: "#fff",
+  searchIcon: {
+    marginRight: 10,
   },
+  searchInput: {
+    flex: 1,
+    fontFamily: "rubik_400Regular",
+    fontSize: 16,
+    color: "#000",
+    padding: 0,
+  },
+  // ...............................
 });
+
+export default EventScreen;
