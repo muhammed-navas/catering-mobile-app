@@ -40,7 +40,7 @@ export default function OnboardingScreen({ navigation }) {
 
   return (
     <>
-      <Background>
+      {/* <Background> */}
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
             <Image
@@ -83,7 +83,7 @@ export default function OnboardingScreen({ navigation }) {
             }
           />
         </SafeAreaView>
-      </Background>
+      {/* </Background> */}
     </>
   );
 }

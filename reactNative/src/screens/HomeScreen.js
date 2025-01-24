@@ -133,12 +133,12 @@ const styles = StyleSheet.create({
     gap: 9,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 13,
     // fontFamily: "rubik_700Bold",
     letterSpacing: 1,
   },
   headerTitle1: {
-    fontSize: 14,
+    fontSize: 12,
     // fontFamily: "rubik_700Bold",
     letterSpacing: 1,
   },

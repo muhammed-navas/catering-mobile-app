@@ -5,7 +5,7 @@ import { Background } from "../components/Background";
 
 const ProfileScreen = () => {
   return (
-    <Background>
+    // <Background>
       <View style={styles.container}>
         {/* Header Navigation */}
         <View style={styles.header}>
@@ -77,7 +77,7 @@ const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </Background>
+    // </Background>
   );
 };
 
