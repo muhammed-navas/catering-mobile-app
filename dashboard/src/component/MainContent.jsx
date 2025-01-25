@@ -1,9 +1,9 @@
 import React from "react";
 import Home from "./content/Home";
-import NewEvent from "./content/NewEvent";
 import AllEvents from "./content/AllEvents";
 import Users from "./content/Users";
 import Settings from "./content/Settings";
+import EventForm from "./content/NewEvent";
 
 function MainContent({ activeItem }) {
   const renderContent = () => {
@@ -11,7 +11,7 @@ function MainContent({ activeItem }) {
       case "home":
         return <Home />;
       case "new-event":
-        return <NewEvent />;
+        return <EventForm />;
       case "all-events":
         return <AllEvents />;
       case "users":
@@ -24,7 +24,7 @@ function MainContent({ activeItem }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+    <div className="container mx-auto px-4 py-4 md:py-6">
       <h2 className="text-3xl font-bold mb-6 capitalize">
         {activeItem.replace("-", " ")}
       </h2>
