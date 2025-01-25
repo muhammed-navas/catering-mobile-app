@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Home from "./content/Home";
-import AllEvents from "./content/AllEvents";
 import Users from "./content/Users";
 import Settings from "./content/Settings";
 import EventForm from "./content/NewEvent";
+import EventCard from "./content/AllEvents";
 
 function MainContent({ activeItem }) {
+  const [editFormData , setEditFormData] = useState(null);
+
   const renderContent = () => {
     switch (activeItem) {
       case "home":
         return <Home />;
       case "new-event":
-        return <EventForm />;
+        return <EventForm editFormData={editFormData} />;
       case "all-events":
-        return <AllEvents />;
+        return <EventCard setEditFormData={setEditFormData} />;
       case "users":
         return <Users />;
       case "settings":

@@ -1,27 +1,154 @@
-import React from "react";
+import React, { useState } from "react";
+import { PopupSure } from "../PopupSure";
+import { Link } from "react-router-dom";
 
-function AllEvents() {
-  const events = [
-    { id: 1, name: "Team Meeting", date: "2023-06-15" },
-    { id: 2, name: "Product Launch", date: "2023-07-01" },
-    { id: 3, name: "Annual Conference", date: "2023-09-10" },
+const EventCard = ({ setEditFormData }) => {
+  const eventData = [
+    {
+      name: "Annual Tech Conference",
+      place: "Silicon Valley",
+      auditorium: "Main Hall",
+      totalCount: 100,
+      date: "22-01-2025 ",
+      time: "04.00 pm",
+      categories: [
+        {
+          name: "one",
+          totalCount: 10,
+        },
+      ],
+      description:
+        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
+    },
+    {
+      name: "Annual Tech Conference",
+      place: "Silicon Valley",
+      auditorium: "Main Hall",
+      totalCount: 800,
+      categories: [
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+        {
+          name: "two",
+          totalCount: 20,
+        },
+      ],
+      description:
+        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
+    },
+    {
+      name: "Annual Tech Conference",
+      place: "Silicon Valley",
+      auditorium: "Main Hall",
+      totalCount: 600,
+      categories: [
+        {
+          name: "three",
+          totalCount: 2,
+        },
+      ],
+      description:
+        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
+    },
   ];
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleDelete = () => {
+    // Your delete logic here
+    console.log("Item deleted!");
+  };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h3 className="text-xl font-semibold mb-4">All Events</h3>
-      <ul className="divide-y divide-gray-200">
-        {events.map((event) => (
-          <li key={event.id} className="py-4">
-            <div className="flex justify-between">
-              <span className="font-medium">{event.name}</span>
-              <span className="text-gray-500">{event.date}</span>
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:grid-cols-2 ">
+        {eventData.map((item, i) => (
+          <div
+            key={i}
+            className="max-w-xl rounded overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+          >
+            <div className="px-6 py-4">
+              <div className="font-bold text-xl mb-2 text-gray-800">
+                {item.name}
+              </div>
+              <p className="text-gray-600 text-base mb-2">
+                <span className="font-semibold">Place:</span> {item.place}
+              </p>
+              <p className="text-gray-600 text-base mb-2">
+                <span className="font-semibold">Auditorium:</span>{" "}
+                {item.auditorium}
+              </p>
+              <div className="flex gap-6 items-center">
+                <p className="text-gray-600 text-base mb-2">
+                  <span className="font-semibold">Date :</span> {item.date}
+                </p>
+                <p className="text-gray-600 text-base mb-2">
+                  <span className="font-semibold"> Time:</span> {item.time}
+                </p>
+              </div>
+              <p className="text-gray-600 text-base mb-2">
+                <span className="font-semibold">Total Count:</span>{" "}
+                {item.totalCount}
+              </p>
+              <div className="text-gray-700 text-sm mb-4 flex  gap-3 items-center flex-wrap ">
+                {item.categories.map((category, i) => (
+                  <p key={i} className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg">
+                    {category.name}{" "}
+                    <span className="bg-gray-400 text-white rounded-md p-1 text-xs">
+                      {" "}
+                      {category.totalCount}
+                    </span>
+                  </p>
+                ))}
+              </div>
+              <div className="flex justify-between items-center">
+                <Link to='/new-event' >
+                <button
+                  onClick={() => setEditFormData(item)}
+                  className="bg-green-500 cursor-pointer hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  Edit
+                </button>
+                </Link>
+                <button
+                  onClick={() => setShowDeleteModal(true)}
+                  className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
-    </div>
+      </div>
+      <PopupSure
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+      />
+    </>
   );
-}
+};
 
-export default AllEvents;
+export default EventCard;
