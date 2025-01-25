@@ -11,7 +11,7 @@ import Sidebar from "./component/Sidebar";
 import BottomNav from "./component/BottomNav";
 import MainContent from "./component/MainContent";
 import { Login } from "./page/Login";
-import EventDetails from "./component/content/EventDetails";
+// import EventDetails from "./component/content/EventDetails";
 import "./App.css";
 
 const menuItems = [
@@ -56,7 +56,7 @@ function App() {
                     path="/settings"
                     element={<MainContent activeItem="settings" />}
                   />
-                  <Route path="/event/:id" element={<EventDetails />} />
+                  {/* <Route path="/event/:id" element={<EventDetails />} /> */}
                 </Routes>
               </main>
               <BottomNav

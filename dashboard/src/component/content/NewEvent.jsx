@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-const EventForm = () => {
+const EventForm = ({ editFormData }) => {
+  console.log(editFormData,'********');
   const [formData, setFormData] = useState({
-    name: "",
-    place: "",
-    auditorium: "",
-    date: "",
-    time: "",
-    description: "",
-    categories: [{ name: "", totalCount: "" }],
+    name:editFormData?.name || "",
+    place:editFormData?.place || "",
+    auditorium: editFormData?.auditorium || "",
+    date: editFormData?.date || "",
+    time: editFormData?.time || "",
+    description: editFormData?.description ||  "",
+    categories: editFormData?.categories || [{ name: "", totalCount: "" }],
   });
 
   const handleInputChange = (e) => {
@@ -88,23 +89,23 @@ const EventForm = () => {
                   required
                 />
               </div>
-            <div>
-              <label
-                htmlFor="auditorium"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Auditorium
-              </label>
-              <input
-                type="text"
-                id="auditorium"
-                name="auditorium"
-                value={formData.auditorium}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                required
-              />
-            </div>
+              <div>
+                <label
+                  htmlFor="auditorium"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Auditorium
+                </label>
+                <input
+                  type="text"
+                  id="auditorium"
+                  name="auditorium"
+                  value={formData.auditorium}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
             </div>
             <div className="flex space-x-4">
               <div className="flex-1">
