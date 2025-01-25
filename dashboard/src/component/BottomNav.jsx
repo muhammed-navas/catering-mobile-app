@@ -1,24 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function BottomNav({ menuItems, activeItem, setActiveItem }) {
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-800">
-      <ul className="flex justify-around py-2">
+    <div className="md:hidden bg-white shadow-lg">
+      <nav className="flex justify-around">
         {menuItems.map((item) => (
-          <li key={item.id}>
-            <a
-              href="#"
-              className={`flex flex-col items-center ${
-                activeItem === item.id ? "text-white" : "text-gray-400"
-              }`}
-              onClick={() => setActiveItem(item.id)}
-            >
-              <item.icon className="text-2xl" />
-              <span className="text-xs mt-1">{item.label}</span>
-            </a>
-          </li>
+          <Link
+            key={item.id}
+            to={item.id === "home" ? "/" : `/${item.id}`}
+            className={`flex flex-col items-center py-2 px-3 ${
+              activeItem === item.id
+                ? "text-blue-500"
+                : "text-gray-600 hover:text-blue-500"
+            }`}
+            onClick={() => setActiveItem(item.id)}
+          >
+            <item.icon className="h-6 w-6" />
+            <span className="text-xs mt-1">{item.label}</span>
+          </Link>
         ))}
-      </ul>
+      </nav>
     </div>
   );
 }
