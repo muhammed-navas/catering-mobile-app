@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Home from "./content/Home";
-import Users from "./content/Users";
+import { UserTable } from "./content/Users";
 import Settings from "./content/Settings";
 import EventForm from "./content/NewEvent";
 import EventCard from "./content/AllEvents";
@@ -13,11 +13,11 @@ function MainContent({ activeItem }) {
       case "home":
         return <Home />;
       case "new-event":
-        return <EventForm editFormData={editFormData} />;
+        return <EventForm editFormData={editFormData} setEditFormData={setEditFormData} />;
       case "all-events":
         return <EventCard setEditFormData={setEditFormData} />;
       case "users":
-        return <Users />;
+        return <UserTable />;
       case "settings":
         return <Settings />;
       default:
