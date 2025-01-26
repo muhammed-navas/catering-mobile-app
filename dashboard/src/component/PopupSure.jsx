@@ -31,7 +31,7 @@ export const PopupSure = ({ isOpen, onClose, onConfirm }) => {
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+            className="px-4 cursor-pointer py-2 text-gray-600 hover:bg-gray-100 rounded"
           >
             Cancel
           </button>
@@ -41,7 +41,7 @@ export const PopupSure = ({ isOpen, onClose, onConfirm }) => {
               onConfirm();
               onClose();
             }}
-            className="px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded"
+            className="px-4 py-2 cursor-pointer bg-red-600 text-white hover:bg-red-700 rounded"
           >
             Delete
           </button>

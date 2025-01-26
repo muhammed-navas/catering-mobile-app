@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const EventForm = ({ editFormData }) => {
-  console.log(editFormData,'********');
+const EventForm = ({ editFormData, setEditFormData }) => {
+
   const [formData, setFormData] = useState({
-    name:editFormData?.name || "",
-    place:editFormData?.place || "",
+    name: editFormData?.name || "",
+    place: editFormData?.place || "",
     auditorium: editFormData?.auditorium || "",
     date: editFormData?.date || "",
     time: editFormData?.time || "",
-    description: editFormData?.description ||  "",
+    description: editFormData?.description || "",
     categories: editFormData?.categories || [{ name: "", totalCount: "" }],
   });
+ 
+const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +29,21 @@ const EventForm = ({ editFormData }) => {
       return category;
     });
     setFormData({ ...formData, categories: updatedCategories });
+  };
+  const cancelHandle = () => {
+    setFormData({
+      name: "",
+      place: "",
+      auditorium: "",
+      date: "",
+      time: "",
+      description: "",
+      categories: [{ name: "", totalCount: "" }],
+    });
+    if (setEditFormData) {
+    setEditFormData(null);
+  }
+  navigate("/all-events");
   };
 
   const addCategory = () => {
@@ -207,12 +225,30 @@ const EventForm = ({ editFormData }) => {
               ))}
             </div>
             <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Submit
-              </button>
+              {editFormData !== null ? (
+                <div className="flex justify-between items-center ">
+                  <button
+                    onClick={cancelHandle}
+                    type="button"
+                    className="px-4 py-2 cursor-pointer text-gray-600 hover:bg-gray-100 rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-fit flex cursor-pointer justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Update
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full flex justify-center cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PopupSure } from "../PopupSure";
 import { Link } from "react-router-dom";
+import { EventDetails } from "./EventDetails";
 
 const EventCard = ({ setEditFormData }) => {
   const eventData = [
@@ -74,6 +75,7 @@ const EventCard = ({ setEditFormData }) => {
     },
   ];
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [ isView , setIsView ] = useState(false);
 
   const handleDelete = () => {
     // Your delete logic here
@@ -113,7 +115,10 @@ const EventCard = ({ setEditFormData }) => {
               </p>
               <div className="text-gray-700 text-sm mb-4 flex  gap-3 items-center flex-wrap ">
                 {item.categories.map((category, i) => (
-                  <p key={i} className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg">
+                  <p
+                    key={i}
+                    className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg"
+                  >
                     {category.name}{" "}
                     <span className="bg-gray-400 text-white rounded-md p-1 text-xs">
                       {" "}
@@ -123,14 +128,20 @@ const EventCard = ({ setEditFormData }) => {
                 ))}
               </div>
               <div className="flex justify-between items-center">
-                <Link to='/new-event' >
-                <button
-                  onClick={() => setEditFormData(item)}
-                  className="bg-green-500 cursor-pointer hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
-                >
-                  Edit
-                </button>
+                <Link to="/new-event">
+                  <button
+                    onClick={() => setEditFormData(item)}
+                    className="bg-green-500 cursor-pointer hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                  >
+                    Edit
+                  </button>
                 </Link>
+                <button
+                  onClick={() => setIsView(true)}
+                  className="bg-slate-500 cursor-pointer hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+                >
+                  View
+                </button>
                 <button
                   onClick={() => setShowDeleteModal(true)}
                   className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
@@ -147,6 +158,7 @@ const EventCard = ({ setEditFormData }) => {
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
       />
+      {isView && <EventDetails setIsView={setIsView} />}
     </>
   );
 };
