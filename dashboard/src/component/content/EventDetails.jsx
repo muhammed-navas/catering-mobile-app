@@ -1,80 +1,36 @@
-import React from 'react'
-import Accordion from '../Accordion';
+import React from "react";
+import Accordion from "../Accordion";
 
-export const EventDetails = ({ setIsView }) => {
-      const accordionItems = [
-        {
-          title: "What is React?",
-          users: ["one", "two", "three"],
-          num: 20,
-        },
-        {
-          title: "What is Tailwind CSS?",
-          users: ["one", "two", "three", "four", "five"],
-          num: 5,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-        {
-          title: "How do they work together?",
-          users: ["one", "two"],
-          num: 10,
-        },
-      ];
+export const EventDetails = ({ setIsView, viewData }) => {
   return (
     <div className="fixed inset-0 bg-black/70 z-[99]  flex items-center justify-center p-4">
       <div className=" rounded overflow-hidden  bg-white w-full lg:w-3/4">
         <div className="px-6 py-4 grid grid-cols-2 lg:grid-cols-3">
-          <div className="font-bold text-xl mb-2 text-gray-800">name</div>
+          <div className="font-bold text-xl mb-2 text-gray-800">
+            {viewData.name}
+          </div>
           <p className="text-gray-600 text-base mb-2">
-            <span className="font-semibold">Place:</span> place
+            <span className="font-semibold">Place:</span> {viewData.place}
           </p>
           <p className="text-gray-600 text-base mb-2">
-            <span className="font-semibold">Auditorium:</span>auditorium
+            <span className="font-semibold">Auditorium:</span>{" "}
+            {viewData.auditorium}
           </p>
           <div className="flex gap-6 items-center">
             <p className="text-gray-600 text-base mb-2">
-              <span className="font-semibold">Date :</span> date
+              <span className="font-semibold">Date :</span> {viewData.date}
             </p>
             <p className="text-gray-600 text-base mb-2">
-              <span className="font-semibold"> Time:</span> time
+              <span className="font-semibold"> Time:</span> {viewData.time}
             </p>
           </div>
           <p className="text-gray-600 text-base mb-2">
-            <span className="font-semibold">Total Count:</span>totalCoun
+            <span className="font-semibold">Total Count:</span>
+            {viewData.totalCount}
           </p>
         </div>
-        <Accordion items={accordionItems} />
+        <Accordion items={viewData.categories} />
         <div className="flex justify-between items-center px-6 py-4">
-         
           <button
             onClick={() => setIsView(false)}
             className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
