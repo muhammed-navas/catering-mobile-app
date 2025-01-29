@@ -6,6 +6,28 @@ import { EventDetails } from "./EventDetails";
 const EventCard = ({ setEditFormData }) => {
   const eventData = [
     {
+      name: "new event",
+      place: "Silicon Valley",
+      auditorium: "Main Hall",
+      totalCount: 100,
+      date: "22-01-2025 ",
+      time: "04.00 pm",
+      categories: [
+        {
+          title: "VIP section",
+          totalCount: 10,
+          users:[ "one", "two", "three"]
+        },
+        {
+          title: "Welcome Drink ",
+          totalCount: 4,
+          users:[ "one1", "two2", "three3"]
+        },
+      ],
+      description:
+        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
+    },
+    {
       name: "Annual Tech Conference",
       place: "Silicon Valley",
       auditorium: "Main Hall",
@@ -14,60 +36,19 @@ const EventCard = ({ setEditFormData }) => {
       time: "04.00 pm",
       categories: [
         {
-          name: "one",
+          title: "VIP section",
           totalCount: 10,
-        },
-      ],
-      description:
-        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
-    },
-    {
-      name: "Annual Tech Conference",
-      place: "Silicon Valley",
-      auditorium: "Main Hall",
-      totalCount: 800,
-      categories: [
-        {
-          name: "two",
-          totalCount: 20,
+          users:[ "one", "two", "three"]
         },
         {
-          name: "two",
-          totalCount: 20,
+          title: "Welcome Drink ",
+          totalCount: 4,
+          users:[ "one1", "two2", "three3"]
         },
         {
-          name: "two",
-          totalCount: 20,
-        },
-        {
-          name: "two",
-          totalCount: 20,
-        },
-        {
-          name: "two",
-          totalCount: 20,
-        },
-        {
-          name: "two",
-          totalCount: 20,
-        },
-        {
-          name: "two",
-          totalCount: 20,
-        },
-      ],
-      description:
-        "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
-    },
-    {
-      name: "Annual Tech Conference",
-      place: "Silicon Valley",
-      auditorium: "Main Hall",
-      totalCount: 600,
-      categories: [
-        {
-          name: "three",
-          totalCount: 2,
+          title: "food supply ",
+          totalCount: 4,
+          users:[ "one1", "two2", "three3"]
         },
       ],
       description:
@@ -76,11 +57,16 @@ const EventCard = ({ setEditFormData }) => {
   ];
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [ isView , setIsView ] = useState(false);
+  const [viewData , setViewData ] = useState(null);
 
   const handleDelete = () => {
     // Your delete logic here
     console.log("Item deleted!");
   };
+  const viewDetailsHandle = (item) =>{
+    setIsView(true)
+    setViewData(item)
+  }
 
   return (
     <>
@@ -119,7 +105,7 @@ const EventCard = ({ setEditFormData }) => {
                     key={i}
                     className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg"
                   >
-                    {category.name}{" "}
+                    {category.title}{" "}
                     <span className="bg-gray-400 text-white rounded-md p-1 text-xs">
                       {" "}
                       {category.totalCount}
@@ -137,7 +123,7 @@ const EventCard = ({ setEditFormData }) => {
                   </button>
                 </Link>
                 <button
-                  onClick={() => setIsView(true)}
+                  onClick={() => viewDetailsHandle(item)}
                   className="bg-slate-500 cursor-pointer hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
                 >
                   View
@@ -158,7 +144,7 @@ const EventCard = ({ setEditFormData }) => {
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDelete}
       />
-      {isView && <EventDetails setIsView={setIsView} />}
+      {isView && <EventDetails setIsView={setIsView} viewData={viewData} />}
     </>
   );
 };
