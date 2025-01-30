@@ -100,7 +100,7 @@ const EventCard = ({ setEditFormData }) => {
                 {item.totalCount}
               </p>
               <div className="text-gray-700 text-sm mb-4 flex  gap-3 items-center flex-wrap ">
-                {item.categories.map((category, i) => (
+                {item?.categories?.map((category, i) => (
                   <p
                     key={i}
                     className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg"
