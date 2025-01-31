@@ -49,7 +49,10 @@ export const UserTable = () => {
       <SearchBar />
       {/* Table for larger screens */}
       <div className="hidden sm:block">
-        <table className="min-w-full bg-white  rounded-lg overflow-hidden">
+        <div className="w-full h-20 bg-gray-50 rounded-tr-lg rounded-tl-lg p-4 flex justify-end">
+          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer"> print</button>
+        </div>
+        <table className="min-w-full bg-white  rounded-br-lg rounded-bl-lg overflow-hidden">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="py-3 px-4 text-left">No</th>
