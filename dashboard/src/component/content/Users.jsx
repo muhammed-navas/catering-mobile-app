@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import SearchBar from "../SearchBar";
+import { useState, useRef, useEffect } from "react"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import SearchBar from "../SearchBar"
+import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid"
 
 const data = [
   {
@@ -22,27 +23,60 @@ const data = [
     proof: "License",
   },
   // Add more dummy data here...
-];
+]
 
-const itemsPerPage = 10;
+const itemsPerPage = 10
 
 export const UserTable = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [activeMenu, setActiveMenu] = useState(null)
+  const menuRef = useRef(null)
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage)
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+    setCurrentPage(pageNumber)
+  }
 
-  const handleDelete = (id) => {
-    // Implement delete functionality here
-    console.log(`Delete item with id: ${id}`);
-  };
+  const toggleMenu = (id) => {
+    setActiveMenu(activeMenu === id ? null : id)
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setActiveMenu(null)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
+  const ActionMenu = ({ id }) => (
+    <div
+      ref={menuRef}
+      className="absolute z-[9999] top-5 right-20 mt-2 w-28 rounded-md  bg-white border border-gray-300 "
+    >
+      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+        <a href="#" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+          View
+        </a>
+        <a href="#" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+          Add Payment
+        </a>
+        <a href="#" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+          Edit
+        </a>
+      </div>
+    </div>
+  )
 
   return (
     <div className="container mx-auto p-2 sm:p-3 lg:p-4">
@@ -50,9 +84,9 @@ export const UserTable = () => {
       {/* Table for larger screens */}
       <div className="hidden sm:block">
         <div className="w-full h-20 bg-gray-50 rounded-tr-lg rounded-tl-lg p-4 flex justify-end">
-          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer"> print</button>
+          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer">print</button>
         </div>
-        <table className="min-w-full bg-white  rounded-br-lg rounded-bl-lg overflow-hidden">
+        <table className="min-w-full bg-white rounded-br-lg rounded-bl-lg overflow-hidden">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="py-3 px-4 text-left">No</th>
@@ -62,15 +96,13 @@ export const UserTable = () => {
               <th className="py-3 px-4 text-left">Phone</th>
               <th className="py-3 px-4 text-left">Total Work</th>
               <th className="py-3 px-4 text-left">Proof</th>
+              <th className="py-3 px-4 text-left">Payment</th>
               <th className="py-3 px-4 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
-              <tr
-                key={item.id}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
+              <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-4">{indexOfFirstItem + index + 1}</td>
                 <td className="py-3 px-4">{item.name}</td>
                 <td className="py-3 px-4">{item.email}</td>
@@ -78,13 +110,12 @@ export const UserTable = () => {
                 <td className="py-3 px-4">{item.phone}</td>
                 <td className="py-3 px-4">{item.totalWork}</td>
                 <td className="py-3 px-4">{item.proof}</td>
-                <td className="py-3 px-4">
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Delete
+                <td className="py-3 px-4">{item.payment}</td>
+                <td className="py-3 px-4 relative">
+                  <button onClick={() => toggleMenu(item.id)} className="text-gray-400 cursor-pointer hover:text-gray-500">
+                    <EllipsisHorizontalIcon className="h-5 w-5" />
                   </button>
+                  {activeMenu === item.id && <ActionMenu id={item.id} />}
                 </td>
               </tr>
             ))}
@@ -95,16 +126,11 @@ export const UserTable = () => {
       {/* Card layout for mobile screens */}
       <div className="sm:hidden space-y-4">
         {currentItems.map((item, index) => (
-          <div key={item.id} className="bg-white  rounded-lg p-4 space-y-2">
+          <div key={item.id} className="bg-white rounded-lg p-4 space-y-2">
             <div className="flex justify-between items-center">
-              <span className="font-bold">
-                No: {indexOfFirstItem + index + 1}
-              </span>
-              <button
-                onClick={() => handleDelete(item.id)}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded text-sm"
-              >
-                Delete
+              <span className="font-bold">No: {indexOfFirstItem + index + 1}</span>
+              <button onClick={() => toggleMenu(item.id)} className="text-gray-400 hover:text-gray-500">
+                <EllipsisHorizontalIcon className="h-5 w-5" />
               </button>
             </div>
             <div>
@@ -120,22 +146,22 @@ export const UserTable = () => {
               <span className="font-semibold">Phone:</span> {item.phone}
             </div>
             <div>
-              <span className="font-semibold">Total Work:</span>{" "}
-              {item.totalWork}
+              <span className="font-semibold">Total Work:</span> {item.totalWork}
             </div>
             <div>
               <span className="font-semibold">Proof:</span> {item.proof}
             </div>
+            <div>
+              <span className="font-semibold">Payment:</span> {item.payment}
+            </div>
+            {activeMenu === item.id && <ActionMenu id={item.id} />}
           </div>
         ))}
       </div>
 
       {/* Pagination */}
-      <div className="mt-4 hidden sm:block  ">
-        <nav
-          className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-          aria-label="Pagination"
-        >
+      <div className="mt-4 hidden sm:block">
+        <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -168,5 +194,6 @@ export const UserTable = () => {
         </nav>
       </div>
     </div>
-  );
+  )
 }
+
