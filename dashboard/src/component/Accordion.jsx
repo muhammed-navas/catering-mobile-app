@@ -44,16 +44,13 @@ const AccordionItem = ({ title, users, num, isOpen, onToggle }) => {
 
 const Accordion = ({ items }) => {
   const [openIndex, setOpenIndex] = useState(null);
-
-  console.log(items,'----------------')
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
     <div className="w-full mx-auto bg-white rounded-lg px-2 overflow-y-scroll h-80">
-      {/* {items?.map((val) =>
-        val.categories.map((item, index) => (
+      {items?.map((item, index) => (
           <AccordionItem
             key={index}
             title={item.title}
@@ -62,8 +59,8 @@ const Accordion = ({ items }) => {
             isOpen={openIndex === index}
             onToggle={() => handleToggle(index)}
           />
-        ))
-      )} */}
+        )
+      )}
     </div>
   );
 };

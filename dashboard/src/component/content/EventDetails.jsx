@@ -2,10 +2,11 @@ import React from "react";
 import Accordion from "../Accordion";
 
 export const EventDetails = ({ setIsView, viewData }) => {
+
   return (
     <div className="fixed inset-0 bg-black/70 z-[99]  flex items-center justify-center p-4">
       <div className=" rounded overflow-hidden  bg-white w-full lg:w-3/4">
-        <div className="px-6 py-4 grid grid-cols-2 lg:grid-cols-3">
+        <div className="px-6 py-4 grid grid-cols-1 lg:grid-cols-3">
           <div className="font-bold text-xl mb-2 text-gray-800">
             {viewData.name}
           </div>
@@ -25,11 +26,11 @@ export const EventDetails = ({ setIsView, viewData }) => {
             </p>
           </div>
           <p className="text-gray-600 text-base mb-2">
-            <span className="font-semibold">Total Count:</span>
+            <span className="font-semibold">Total Count works:</span>
             {viewData.totalCount}
           </p>
         </div>
-        <Accordion items={viewData.categories} />
+        <Accordion items={viewData?.categories} />
         <div className="flex justify-between items-center px-6 py-4">
           <button
             onClick={() => setIsView(false)}

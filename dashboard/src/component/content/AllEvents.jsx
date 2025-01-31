@@ -50,6 +50,11 @@ const EventCard = ({ setEditFormData }) => {
           totalCount: 4,
           users:[ "one1", "two2", "three3"]
         },
+        {
+          title: "food supply ",
+          totalCount: 6,
+          users:[ "one1", "two2", "three3"]
+        },
       ],
       description:
         "Join us for the biggest tech conference of the year, featuring keynotes from industry leaders and hands-on workshops on the latest technologies.",
