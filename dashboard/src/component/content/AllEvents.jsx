@@ -53,7 +53,7 @@ const EventCard = ({ setEditFormData }) => {
         {
           title: "food supply ",
           totalCount: 6,
-          users:[ "one1", "two2", "three3"]
+          users:[ "one1", "two2", "three3","two2", "three3"]
         },
       ],
       description:
@@ -113,7 +113,7 @@ const EventCard = ({ setEditFormData }) => {
                     {category.title}{" "}
                     <span className="bg-gray-400 text-white rounded-md p-1 text-xs">
                       {" "}
-                      {category.totalCount}
+                      {category.users.length}
                     </span>
                   </p>
                 ))}

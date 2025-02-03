@@ -62,7 +62,7 @@ export const UserTable = () => {
   const ActionMenu = ({ id }) => (
     <div
       ref={menuRef}
-      className="absolute z-[9999] top-5 right-20 mt-2 w-28 rounded-md  bg-white border border-gray-300 "
+      className="absolute z-[9999] top-8 lg:top-5 right-4 lg:right-20 mt-2 w-28 rounded-md  bg-white border border-gray-300 "
     >
       <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
         <a href="#" className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
@@ -84,7 +84,9 @@ export const UserTable = () => {
       {/* Table for larger screens */}
       <div className="hidden sm:block">
         <div className="w-full h-20 bg-gray-50 rounded-tr-lg rounded-tl-lg p-4 flex justify-end">
-          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer">print</button>
+          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer">
+            print
+          </button>
         </div>
         <table className="min-w-full bg-white rounded-br-lg rounded-bl-lg overflow-hidden">
           <thead className="bg-gray-100 text-gray-700">
@@ -102,7 +104,10 @@ export const UserTable = () => {
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
-              <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-100">
+              <tr
+                key={item.id}
+                className="border-b border-gray-200 hover:bg-gray-100"
+              >
                 <td className="py-3 px-4">{indexOfFirstItem + index + 1}</td>
                 <td className="py-3 px-4">{item.name}</td>
                 <td className="py-3 px-4">{item.email}</td>
@@ -112,7 +117,10 @@ export const UserTable = () => {
                 <td className="py-3 px-4">{item.proof}</td>
                 <td className="py-3 px-4">{item.payment}</td>
                 <td className="py-3 px-4 relative">
-                  <button onClick={() => toggleMenu(item.id)} className="text-gray-400 cursor-pointer hover:text-gray-500">
+                  <button
+                    onClick={() => toggleMenu(item.id)}
+                    className="text-gray-400 cursor-pointer hover:text-gray-500"
+                  >
                     <EllipsisHorizontalIcon className="h-5 w-5" />
                   </button>
                   {activeMenu === item.id && <ActionMenu id={item.id} />}
@@ -125,11 +133,21 @@ export const UserTable = () => {
 
       {/* Card layout for mobile screens */}
       <div className="sm:hidden space-y-4">
+        <div className="w-full h-20 bg-gray-50 rounded-tr-lg rounded-tl-lg p-4 flex justify-end">
+          <button className="px-4 py-1 bg-amber-700 text-white text-end rounded cursor-pointer">
+            print
+          </button>
+        </div>
         {currentItems.map((item, index) => (
-          <div key={item.id} className="bg-white rounded-lg p-4 space-y-2">
+          <div key={item.id} className="bg-white rounded-lg p-4 space-y-2 relative">
             <div className="flex justify-between items-center">
-              <span className="font-bold">No: {indexOfFirstItem + index + 1}</span>
-              <button onClick={() => toggleMenu(item.id)} className="text-gray-400 hover:text-gray-500">
+              <span className="font-bold">
+                No: {indexOfFirstItem + index + 1}
+              </span>
+              <button
+                onClick={() => toggleMenu(item.id)}
+                className="text-gray-400 hover:text-gray-500"
+              >
                 <EllipsisHorizontalIcon className="h-5 w-5" />
               </button>
             </div>
@@ -146,7 +164,8 @@ export const UserTable = () => {
               <span className="font-semibold">Phone:</span> {item.phone}
             </div>
             <div>
-              <span className="font-semibold">Total Work:</span> {item.totalWork}
+              <span className="font-semibold">Total Work:</span>{" "}
+              {item.totalWork}
             </div>
             <div>
               <span className="font-semibold">Proof:</span> {item.proof}
@@ -161,7 +180,10 @@ export const UserTable = () => {
 
       {/* Pagination */}
       <div className="mt-4 hidden sm:block">
-        <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <nav
+          className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+          aria-label="Pagination"
+        >
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -194,6 +216,6 @@ export const UserTable = () => {
         </nav>
       </div>
     </div>
-  )
+  );
 }
 
