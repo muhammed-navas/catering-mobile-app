@@ -38,6 +38,11 @@ export const EventDetails = ({ setIsView, viewData }) => {
           >
             Cancel
           </button>
+          <button
+            className="bg-gray-500 cursor-pointer hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+          >
+           Print
+          </button>
         </div>
       </div>
     </div>
