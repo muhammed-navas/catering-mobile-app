@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import SearchBar from "../SearchBar";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import { PopupSure } from "../PopupSure";
 
 const data = [
   {
@@ -20,43 +21,47 @@ const data = [
 
 const itemsPerPage = 5;
 
-const ActionMenu = ({ id }) => (
-  <div className="absolute right-0 w-36 z-[999]  py-2 bg-white rounded-md shadow-lg border border-gray-200 animate-fade-in">
-    <div
-      className="py-1"
-      role="menu"
-      aria-orientation="vertical"
-      aria-labelledby="options-menu"
-    >
-      <a
-        href="#"
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-        role="menuitem"
+const ActionMenu = ({ id, setIsDelete }) => {
+  return (
+    <div className="absolute right-0 w-36 z-[999]  py-2 bg-white rounded-md shadow-lg border border-gray-200 animate-fade-in">
+      <div
+        className="py-1"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="options-menu"
       >
-        View
-      </a>
-      <a
-        href="#"
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-        role="menuitem"
-      >
-        Add Payment
-      </a>
-      <a
-        href="#"
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-        role="menuitem"
-      >
-        Edit
-      </a>
+        <button
+          href="#"
+          className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+          role="menuitem"
+        >
+          View
+        </button>
+        <button
+          href="#"
+          className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+          role="menuitem"
+        >
+          Add Payment
+        </button>
+        <button
+          onClick={() => setIsDelete(true)}
+          className="block px-4 py-2 w-full cursor-pointer text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+        >
+          Delete
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
+;
 
 export const UserTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMenu, setActiveMenu] = useState(null); // Added state variable
+
+  const [isDelete, setIsDelete] = useState(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -141,7 +146,9 @@ export const UserTable = () => {
                     >
                       <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
                     </button>
-                    {activeMenu === item.id && <ActionMenu id={item.id} />}
+                    {activeMenu === item.id && (
+                      <ActionMenu id={item.id} setIsDelete={setIsDelete} />
+                    )}
                   </div>
                 </td>
               </tr>
@@ -196,6 +203,11 @@ export const UserTable = () => {
           <FaChevronRight />
         </button>
       </div>
+      <PopupSure
+        isOpen={isDelete}
+        onClose={() => setIsDelete(false)}
+        // onConfirm={handleDelete}
+      />
     </div>
   );
 };
