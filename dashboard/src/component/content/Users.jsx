@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import SearchBar from "../SearchBar";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import { PopupSure } from "../PopupSure";
+import { AddPayment } from "../AddPayment";
 
 const data = [
   {
@@ -21,7 +22,7 @@ const data = [
 
 const itemsPerPage = 5;
 
-const ActionMenu = ({ id, setIsDelete }) => {
+const ActionMenu = ({ id, setIsDelete, setIsPayment }) => {
   return (
     <div className="absolute right-0 w-36 z-[999]  py-2 bg-white rounded-md shadow-lg border border-gray-200 animate-fade-in">
       <div
@@ -30,17 +31,12 @@ const ActionMenu = ({ id, setIsDelete }) => {
         aria-orientation="vertical"
         aria-labelledby="options-menu"
       >
-        <button
-          href="#"
-          className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-          role="menuitem"
-        >
+        <button className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150">
           View
         </button>
         <button
-          href="#"
+          onClick={() => setIsPayment(true)}
           className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150"
-          role="menuitem"
         >
           Add Payment
         </button>
@@ -62,6 +58,7 @@ export const UserTable = () => {
   const [activeMenu, setActiveMenu] = useState(null); // Added state variable
 
   const [isDelete, setIsDelete] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -147,7 +144,11 @@ export const UserTable = () => {
                       <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
                     </button>
                     {activeMenu === item.id && (
-                      <ActionMenu id={item.id} setIsDelete={setIsDelete} />
+                      <ActionMenu
+                        id={item.id}
+                        setIsDelete={setIsDelete}
+                        setIsPayment={setIsPayment}
+                      />
                     )}
                   </div>
                 </td>
@@ -172,7 +173,13 @@ export const UserTable = () => {
                 >
                   <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
                 </button>
-                {activeMenu === item.id && <ActionMenu id={item.id} />}
+                {activeMenu === item.id && (
+                  <ActionMenu
+                    id={item.id}
+                    setIsDelete={setIsDelete}
+                    setIsPayment={setIsPayment}
+                  />
+                )}
               </div>
             </div>
             <div>
@@ -208,6 +215,7 @@ export const UserTable = () => {
         onClose={() => setIsDelete(false)}
         // onConfirm={handleDelete}
       />
+      <AddPayment isOpen={isPayment} onClose={() => setIsPayment(false)} />
     </div>
   );
 };
