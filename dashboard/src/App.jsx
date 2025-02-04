@@ -15,11 +15,11 @@ import { Login } from "./page/Login";
 import "./App.css";
 
 const menuItems = [
-  { id: "home", label: "Home", icon: FaHome },
-  { id: "new-event", label: "New Event", icon: FaCalendarPlus },
-  { id: "all-events", label: "All Events", icon: FaCalendarAlt },
-  { id: "users", label: "Users", icon: FaUsers },
-  { id: "settings", label: "Settings", icon: FaCog },
+  {  label: "Home", icon: FaHome, path: "/" },
+  {  label: "New Event", icon: FaCalendarPlus, path: "/new-event" },
+  {  label: "All Events", icon: FaCalendarAlt, path: "/all-events" },
+  {  label: "Users", icon: FaUsers, path: "/users" },
+  {  label: "Settings", icon: FaCog, path: "/settings" },
 ];
 
 function App() {
@@ -39,24 +39,19 @@ function App() {
             <div className="flex-1 flex flex-col overflow-hidden">
               <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <Routes>
-                  <Route path="/" element={<MainContent activeItem="home" />} />
-                  <Route
-                    path="/new-event"
-                    element={<MainContent activeItem="new-event" />}
-                  />
-                  <Route
-                    path="/all-events"
-                    element={<MainContent activeItem="all-events" />}
-                  />
-                  <Route
-                    path="/users"
-                    element={<MainContent activeItem="users" />}
-                  />
-                  <Route
-                    path="/settings"
-                    element={<MainContent activeItem="settings" />}
-                  />
-                  {/* <Route path="/event/:id" element={<EventDetails />} /> */}
+                  {menuItems.map((item,i) => (
+                    <Route
+                      key={i}
+                      path={item.path}
+                      element={
+                        <MainContent
+                          activeItem={item.label
+                            .toLowerCase()
+                            .replace(" ", "-")}
+                        />
+                      }
+                    />
+                  ))}
                 </Routes>
               </main>
               <BottomNav
