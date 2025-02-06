@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+
 const EventForm = ({ editFormData, setEditFormData }) => {
 
+  const API_URL = import.meta.env.VITE_ULR
+
+  
   const [formData, setFormData] = useState({
     name: editFormData?.name || "",
     place: editFormData?.place || "",
@@ -58,10 +62,14 @@ const navigate = useNavigate();
     setFormData({ ...formData, categories: updatedCategories });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Here you would typically send the data to your backend
+    try {
+        const response = await axios.post(API_URL);
+    } catch (error) {
+      
+    }
+    console.log(formData,'form');
   };
 
   return (

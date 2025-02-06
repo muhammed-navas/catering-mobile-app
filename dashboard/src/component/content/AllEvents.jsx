@@ -111,7 +111,7 @@ const EventCard = ({ setEditFormData }) => {
                     className="bg-gray-300 pl-2 py-0.5 w-fit rounded-lg"
                   >
                     {category.title}{" "}
-                    <span className="bg-gray-400 text-white rounded-md p-1 text-xs">
+                    <span className="bg-gray-400 text-white rounded-md px-2 py-0.5 text-xs">
                       {" "}
                       {category.users.length}
                     </span>

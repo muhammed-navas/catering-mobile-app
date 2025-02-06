@@ -29,7 +29,7 @@ function App() {
   return (
     <Router>
       <div className="flex h-screen bg-gray-100">
-        {!accessToken ? (
+        {accessToken ? (
           <>
             <Sidebar
               menuItems={menuItems}

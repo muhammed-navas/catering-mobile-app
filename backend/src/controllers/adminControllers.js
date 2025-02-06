@@ -2,16 +2,35 @@ import mongoose from "mongoose";
 import EventAdd from "../models/AdminEventAdd.js";
 import AdminCategory from "../models/AdminCategoryAdd.js";
 import PaymentSchema from "../models/AdminPaymentAdd.js";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+import Admin from "../models/Admin.js";
 
 dotenv.config();
 
-export const adminLogin = (req, res, next) => {
+export const adminLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (email === process.env.email && password === process.env.password) {
-      return res.status(200).json({ message: "Login Success full" });
+    if (!email && !password) {
+      return res.status(400).json({ message: "email and password is invalid" });
     }
+    const admin = await Admin.find({ email });
+    if (!admin) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      const accessToken = await jwt.sign(
+        {
+          // Valid for 5 hours
+          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 5,
+          data: { email: req.body.email },
+        },
+        process.env.ACCESS_TOKEN_SECRET
+      );
+    }
+    return res
+      .status(200)
+      .json({ message: "Login Successfull", token: accessToken });
   } catch (error) {
     next(error);
   }
@@ -38,20 +57,20 @@ export const adminEventAdd = async (req, res, next) => {
       !Array.isArray(eventCategory)
     )
       return res.status(400).json({ massage: "input not found" });
-       for (const category of eventCategory) {
-         if (!category.name || typeof category.name !== "string") {
-           return res.status(400).json({ message: "Invalid category name" });
-         }
-         if (
-           category.workersCount == null || 
-           typeof category.workersCount !== "number" ||
-           category.workersCount < 0
-         ) {
-           return res
-             .status(400)
-             .json({ message: "Invalid workersCount in eventCategory" });
-         }
-       }
+    for (const category of eventCategory) {
+      if (!category.name || typeof category.name !== "string") {
+        return res.status(400).json({ message: "Invalid category name" });
+      }
+      if (
+        category.workersCount == null ||
+        typeof category.workersCount !== "number" ||
+        category.workersCount < 0
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Invalid workersCount in eventCategory" });
+      }
+    }
     const newEvent = new EventAdd({
       eventName,
       eventDate,
@@ -85,8 +104,8 @@ export const adminEventGet = async (req, res, next) => {
 
 export const adminEventEdit = async (req, res, next) => {
   try {
-    const { id } = req.query; 
-    const eventEdit = req.body; 
+    const { id } = req.query;
+    const eventEdit = req.body;
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res
@@ -110,7 +129,7 @@ export const adminEventEdit = async (req, res, next) => {
           return res.status(400).json({ message: "Invalid category name" });
         }
         if (
-          category.workersCount == null || 
+          category.workersCount == null ||
           typeof category.workersCount !== "number" ||
           category.workersCount < 0
         ) {
@@ -122,7 +141,7 @@ export const adminEventEdit = async (req, res, next) => {
     }
 
     const updatedEvent = await EventAdd.findByIdAndUpdate(id, eventEdit, {
-      new: true, 
+      new: true,
       runValidators: true,
     });
 
@@ -160,12 +179,11 @@ export const adminEventDelete = async (req, res, next) => {
 export const AdminCategoryAdd = async (req, res, next) => {
   try {
     const { category } = req.body;
-    if (!category )
-      return res.status(404).json({ message: "No category" });
+    if (!category) return res.status(404).json({ message: "No category" });
     const newCategory = new AdminCategory({
-      category: category
+      category: category,
     });
-    
+
     await newCategory.save();
     return res.status(201).json({ message: "Categories Added Successfully" });
   } catch (error) {
@@ -197,12 +215,10 @@ export const AdminCategoryEdit = async (req, res, next) => {
     });
     if (!updateCategory)
       return res.status(404).json({ message: "category not found" });
-    return res
-      .status(200)
-      .json({
-        message: "category updated successfully",
-        category: updateCategory,
-      });
+    return res.status(200).json({
+      message: "category updated successfully",
+      category: updateCategory,
+    });
   } catch (error) {
     next(error);
   }
@@ -226,77 +242,80 @@ export const AdminCategoryDelete = async (req, res, next) => {
   }
 };
 
-export const adminPaymentAdd = async (req, res , next ) =>{
+export const adminPaymentAdd = async (req, res, next) => {
   try {
     const { userId, amount } = req.body;
-      if (!userId || !amount) {
-        return res
-          .status(400)
-          .json({ message: "User ID and amount are required." });
-      }
+    if (!userId || !amount) {
+      return res
+        .status(400)
+        .json({ message: "User ID and amount are required." });
+    }
     const paymentAdd = new PaymentSchema({
       userId: userId,
       amount: amount,
-      date : new Date()
-    })
-  await paymentAdd.save();
-  return res
-    .status(201)
-    .json({ message: "Payment added successfully", payment: paymentAdd });
+      date: new Date(),
+    });
+    await paymentAdd.save();
+    return res
+      .status(201)
+      .json({ message: "Payment added successfully", payment: paymentAdd });
   } catch (error) {
     console.error("Error adding payment:", error.message);
-    next(error)
+    next(error);
   }
-}
+};
 
-export const adminPaymentGet = async (req, res ,next ) =>{
+export const adminPaymentGet = async (req, res, next) => {
   try {
     const payment = await PaymentSchema.find();
-    if(!payment){
-      return res.status(404).json({ message: " payment not found"})
+    if (!payment) {
+      return res.status(404).json({ message: " payment not found" });
     }
-    return res.status(200).json({ message : "payment get is successful" , payment : payment})
-  } catch (error) {
-    console.log(error.massage);
-    next(error)
-  }
-}
-
-export const adminPaymentEdit = async (req, res , next ) =>{
-  try {
-    const { id } = req.params;
-    const amount = req.body;
-    if(!id || !amount){
-      return res.status(404).json({message: "Payment not found"});
-    }
-    const payment = await PaymentSchema.findByIdAndUpdate(id,amount,{new:true});
-    if(!payment){
-      return res.status(404).json({ message: "Payment not found" });
-    }
-    return res.status(200).json({massage : " payment updated successfully"})
-  } catch (error) {
-    console.log(error.massage)
-    next(error)
-  }
-}
-
-export const adminPaymentDelete = async (req, res , next ) =>{
-  try {
-    const {id} = req.params;
-    if (!id) {
-      return res.status(400).json({ msg: "id required" });
-    }
-    const deleteCategory = await AdminCategory.findByIdAndDelete({ _id: id });
-      if (!deleteCategory) {
-        return res.status(404).json({ message: "Job request not found" });
-      }
-      return res.status(200).json({
-        message: "category updated successfully",
-        category: updateCategory,
-      });
+    return res
+      .status(200)
+      .json({ message: "payment get is successful", payment: payment });
   } catch (error) {
     console.log(error.massage);
     next(error);
   }
-}
+};
 
+export const adminPaymentEdit = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const amount = req.body;
+    if (!id || !amount) {
+      return res.status(404).json({ message: "Payment not found" });
+    }
+    const payment = await PaymentSchema.findByIdAndUpdate(id, amount, {
+      new: true,
+    });
+    if (!payment) {
+      return res.status(404).json({ message: "Payment not found" });
+    }
+    return res.status(200).json({ massage: " payment updated successfully" });
+  } catch (error) {
+    console.log(error.massage);
+    next(error);
+  }
+};
+
+export const adminPaymentDelete = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ msg: "id required" });
+    }
+    const deleteCategory = await AdminCategory.findByIdAndDelete({ _id: id });
+    if (!deleteCategory) {
+      return res.status(404).json({ message: "Job request not found" });
+    }
+    return res.status(200).json({
+      message: "category updated successfully",
+      category: updateCategory,
+    });
+  } catch (error) {
+    console.log(error.massage);
+    next(error);
+  }
+};
