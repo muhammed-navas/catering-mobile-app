@@ -27,11 +27,13 @@ export const adminLogin = async (req, res, next) => {
         },
         process.env.ACCESS_TOKEN_SECRET
       );
+      return res
+        .status(200)
+        .json({ message: "Login Successfull", token: accessToken });
     }
-    return res
-      .status(200)
-      .json({ message: "Login Successfull", token: accessToken });
+      return res.status(401).json({ message: "Unauthorized Access" });
   } catch (error) {
+    return res.status(500).json({ message: error.message });
     next(error);
   }
 };
