@@ -7,7 +7,7 @@ import { AddPayment } from "../AddPayment";
 
 const data = [
   {
-    id: 1,
+    _id: 1,
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "0987654321",
@@ -16,13 +16,23 @@ const data = [
     payment: 2000,
     proof: "Aadhaar",
   },
+  {
+    _id: 2,
+    name: "John Doe1212",
+    email: "john.do1212e@example.com",
+    phone: "0987654321",
+    place: "New York1122",
+    completedWork: "2",
+    payment: 2000333,
+    proof: "Aadhaar1212",
+  },
 
   // Add more data as needed
 ];
 
 const itemsPerPage = 5;
 
-const ActionMenu = ({ id, setIsDelete, setIsPayment }) => {
+const ActionMenu = ({ id, setIsDelete, paymentFn }) => {
   return (
     <div className="absolute right-0 w-36 z-[999]  py-2 bg-white rounded-md shadow-lg border border-gray-200 animate-fade-in">
       <div
@@ -35,7 +45,7 @@ const ActionMenu = ({ id, setIsDelete, setIsPayment }) => {
           View
         </button>
         <button
-          onClick={() => setIsPayment(true)}
+          onClick={() => paymentFn(id)}
           className="block px-4 py-2 text-sm w-full cursor-pointer text-gray-700 hover:bg-gray-50 transition-colors duration-150"
         >
           Add Payment
@@ -55,10 +65,11 @@ const ActionMenu = ({ id, setIsDelete, setIsPayment }) => {
 export const UserTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeMenu, setActiveMenu] = useState(null); // Added state variable
-
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [paymentUserData, setPaymentUserData] = useState(null)
   const [isDelete, setIsDelete] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
+  const [isAction , setIsAction] = useState(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -71,13 +82,28 @@ export const UserTable = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const toggleMenu = (id, event) => {
-    event.stopPropagation(); // Prevent event bubbling
+    event.stopPropagation(); 
+    setIsAction(true)
     setActiveMenu(activeMenu === id ? null : id);
   };
-
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
+  
+  const paymentFn = (id) =>{
+    setIsAction(false)
+    setIsPayment(true);
+    const paymentUser = data.filter((item)=> item._id === id)
+    setPaymentUserData(paymentUser);
+  }
+
+  const paymentHandle = (data) =>{
+     // add payment logic 
+     setIsPayment(false);
+     console.log(data,'---');
+  }
+
 
   return (
     <div className="container mx-auto p-2 sm:p-3 lg:p-4">
@@ -128,26 +154,26 @@ export const UserTable = () => {
                 className="border-b dived-y bg-white border-gray-200 "
               >
                 <td className="py-3 px-4">{indexOfFirstItem + index + 1}</td>
-                <td className="py-3 px-4">{item.name}</td>
-                <td className="py-3 px-4">{item.email}</td>
-                <td className="py-3 px-4">{item.place}</td>
-                <td className="py-3 px-4">{item.phone}</td>
-                <td className="py-3 px-4">{item.completedWork}</td>
-                <td className="py-3 px-4">{item.payment}</td>
-                <td className="py-3 px-4">{item.proof}</td>
-                <td className="py-3 px-4">
+                <td className="py-3 text-xs px-4">{item.name}</td>
+                <td className="py-3 text-xs px-4">{item.email}</td>
+                <td className="py-3 text-xs px-4">{item.place}</td>
+                <td className="py-3 text-xs px-4">{item.phone}</td>
+                <td className="py-3 text-xs px-4">{item.completedWork}</td>
+                <td className="py-3 text-xs px-4">{item.payment}</td>
+                <td className="py-3 text-xs px-4">{item.proof}</td>
+                <td className="py-3 text-xs px-4">
                   <div className="relative ">
                     <button
-                      onClick={(e) => toggleMenu(item.id, e)}
+                      onClick={(e) => toggleMenu(item._id, e)}
                       className="p-1 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                     >
                       <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
                     </button>
-                    {activeMenu === item.id && (
+                    {isAction && activeMenu === item._id && (
                       <ActionMenu
-                        id={item.id}
+                        id={item._id}
                         setIsDelete={setIsDelete}
-                        setIsPayment={setIsPayment}
+                        paymentFn={paymentFn}
                       />
                     )}
                   </div>
@@ -166,26 +192,34 @@ export const UserTable = () => {
               <span className="font-bold">
                 No: {indexOfFirstItem + index + 1}
               </span>
-              <div className="relative">
+              <div className="relative ">
                 <button
-                  onClick={(e) => toggleMenu(item.id, e)}
-                  className="p-1 rounded-full hover:bg-gray-100 transition-colors duration-150"
+                  onClick={(e) => toggleMenu(item._id, e)}
+                  className="p-1 rounded-full hover:bg-gray-100 cursor-pointer transition-colors duration-150"
                 >
                   <EllipsisHorizontalIcon className="h-5 w-5 text-gray-500" />
                 </button>
-                {activeMenu === item.id && (
+                {isAction && activeMenu === item._id && (
                   <ActionMenu
-                    id={item.id}
+                    id={item._id}
                     setIsDelete={setIsDelete}
-                    setIsPayment={setIsPayment}
+                    paymentFn={paymentFn}
                   />
                 )}
               </div>
             </div>
             <div>
-              <p>Name: {item.name}</p>
+              <div className="flex justify-between items-center">
+                <p>Name: {item.name}</p>
+                <p>phone: {item.phone}</p>
+              </div>
               <p>Email: {item.email}</p>
-              <p>Role: {item.role}</p>
+              <p>place: {item.place}</p>
+              <div className="flex justify-between items-center">
+                <p>completedWork: {item.completedWork}</p>
+                <p>payment: {item.payment}</p>
+              </div>
+              <p>proof: {item.proof}</p>
             </div>
           </div>
         ))}
@@ -215,7 +249,12 @@ export const UserTable = () => {
         onClose={() => setIsDelete(false)}
         // onConfirm={handleDelete}
       />
-      <AddPayment isOpen={isPayment} onClose={() => setIsPayment(false)} />
+      <AddPayment
+        isOpen={isPayment}
+        paymentUserData={paymentUserData}
+        onClose={() => setIsPayment(false)}
+        onConfirm={paymentHandle}
+      />
     </div>
   );
 };

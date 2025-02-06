@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-export const AddPayment = ({ isOpen, onClose, onConfirm }) => {
+export const AddPayment = ({ isOpen, onClose,paymentUserData, onConfirm }) => {
   const [payment, setPayment] = useState("");
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
+     
     e.preventDefault();
     onConfirm({ payment});
     onClose();
@@ -18,6 +19,7 @@ export const AddPayment = ({ isOpen, onClose, onConfirm }) => {
       aria-labelledby="add-payment-modal-title"
       aria-modal="true"
     >
+      {paymentUserData.map((item,i)=>
       <div
         className="bg-white rounded-lg p-6 max-w-md w-full"
         onClick={(e) => e.stopPropagation()}
@@ -31,14 +33,14 @@ export const AddPayment = ({ isOpen, onClose, onConfirm }) => {
         <div className="mb-4">
           <h1 className="text-sm font-semibold text-slate-900">
             {" "}
-            Name : <span>muhammed</span>{" "}
+            Name : <span>{item.name}</span>{" "}
           </h1>
           <p className="text-sm font-semibold text-slate-900">
-            Phone number : <span>0987654321</span>
+            Phone number : <span>{item.phone}</span>
           </p>
           <p className="text-sm font-semibold text-slate-900">
             Payment:{" "}
-            <span className="bg-amber-100 px-3 py-0.5  text-xs">1800</span>
+            <span className="bg-amber-100 px-3 py-0.5  text-xs">{item.payment}</span>
           </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,6 +79,7 @@ export const AddPayment = ({ isOpen, onClose, onConfirm }) => {
           </div>
         </form>
       </div>
+      )}
     </div>
   );
 };
