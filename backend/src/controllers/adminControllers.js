@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import Admin from "../models/Admin.js";
 import  jwt  from "jsonwebtoken";
+import User from "../models/user.js";
 
 dotenv.config();
 
@@ -341,3 +342,16 @@ export const adminPaymentDelete = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getUserData = async (req, res, next) => {
+  console.log('hi')
+    try {
+      const user = await User.find();
+      if (!user) return res.status(401).json({ message: "user not found" });
+      console.log(user,'user')
+      return res.status(200).json({ message: "Job successfully", data: user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: error.message });
+    }
+}
