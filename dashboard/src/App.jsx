@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import {
   FaHome,
   FaCalendarPlus,
@@ -11,7 +16,6 @@ import Sidebar from "./component/Sidebar";
 import BottomNav from "./component/BottomNav";
 import MainContent from "./component/MainContent";
 import { Login } from "./page/Login";
-// import EventDetails from "./component/content/EventDetails";
 import "./App.css";
 
 const menuItems = [
@@ -26,51 +30,65 @@ function App() {
   const [activeItem, setActiveItem] = useState("home");
   const [isLogin, setIsLogin] = useState(false);
 
- useEffect(() => {
-   const session = sessionStorage.getItem("accessToken");
-   if (session) {
-     setIsLogin(true);
-   }
- }, []);
+
+  useEffect(() => {
+    const session = sessionStorage.getItem("accessToken");
+    if (session) {
+      setIsLogin(true);
+    }
+  }, []);
 
   return (
     <Router>
       <div className="flex h-screen bg-gray-100">
-        {isLogin ? (
-          <>
-            <Sidebar
-              menuItems={menuItems}
-              activeItem={activeItem}
-              setActiveItem={setActiveItem}
-            />
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
-                <Routes>
-                  {menuItems.map((item, i) => (
-                    <Route
-                      key={i}
-                      path={item.path}
-                      element={
-                        <MainContent
-                          activeItem={item.label
-                            .toLowerCase()
-                            .replace(" ", "-")}
-                        />
-                      }
+        <Routes>
+          {!isLogin && (
+            <Route path="/" element={<Login setIsLogin={setIsLogin} />} />
+          )}
+          {isLogin ? (
+            <>
+              <Route
+                path="/*"
+                element={
+                  <>
+                    <Sidebar
+                      menuItems={menuItems}
+                      activeItem={activeItem}
+                      setActiveItem={setActiveItem}
                     />
-                  ))}
-                </Routes>
-              </main>
-              <BottomNav
-                menuItems={menuItems}
-                activeItem={activeItem}
-                setActiveItem={setActiveItem}
+                    <div className="flex-1 flex flex-col overflow-hidden">
+                      <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                        <Routes>
+                          {menuItems.map((item, i) => (
+                            <Route
+                              key={i}
+                              path={item.path}
+                              element={
+                                <MainContent
+                                  activeItem={item.label
+                                    .toLowerCase()
+                                    .replace(" ", "-")}
+                                />
+                              }
+                            />
+                          ))}
+                          <Route path="*" element={<Navigate to="/home" />} />
+                        </Routes>
+                      </main>
+                      <BottomNav
+                        menuItems={menuItems}
+                        activeItem={activeItem}
+                        setActiveItem={setActiveItem}
+                      />
+                    </div>
+                  </>
+                }
               />
-            </div>
-          </>
-        ) : (
-          <Login />
-        )}
+            </>
+          ) : (
+            <Route path="*" element={<Navigate to="/" />} />
+          )}
+        </Routes>
       </div>
     </Router>
   );

@@ -5,8 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-
-  const BACKEND_URL = import.meta.env.VITE_URL;
+  // const BACKEND_URL = import.meta.env.VITE_URL;
 
   const [login, setLogin] = useState({
     email: "",
@@ -25,20 +24,20 @@ export const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // const response = await axios.post(
-      //   `http://localhost:3001/api/admin/login`,
-      //   login,
-      //   {
-      //     headers: { "Content-Type": "application/json" },
-      //   }
-      // );
       const response = await axios.post(
-        `${BACKEND_URL}/login`,
+        `http://localhost:3001/api/admin/login`,
         login,
         {
           headers: { "Content-Type": "application/json" },
         }
       );
+      // const response = await axios.post(
+      //   `${BACKEND_URL}/login`,
+      //   login,
+      //   {
+      //     headers: { "Content-Type": "application/json" },
+      //   }
+      // );
 
       if (response.status === 200) {
         sessionStorage.setItem("accessToken", response.data.token);
@@ -51,7 +50,6 @@ export const Login = () => {
       );
       console.error("Login error:", error);
     } finally {
-      navigate("/home");
       setIsLoading(false);
     }
   };
