@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 mongoDB();
-app.use(cors());
+app.use(cors({origin: "*"}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
