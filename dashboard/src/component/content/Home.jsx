@@ -33,8 +33,8 @@ const Home = () => {
       role="list"
       className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
     >
-      {clients.map((client) => (
-        <Link to={client.path} >
+      {clients.map((client,i) => (
+        <Link key={i} to={client.path} >
         <li
           key={client.id}
           

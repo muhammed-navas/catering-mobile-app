@@ -6,7 +6,7 @@ import EventForm from "./content/NewEvent";
 import EventCard from "./content/AllEvents";
 
 function MainContent({ activeItem }) {
-  const [editFormData , setEditFormData] = useState(null);
+  const [editFormData, setEditFormData] = useState(null);
 
   const renderContent = () => {
     switch (activeItem) {
