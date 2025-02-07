@@ -4,6 +4,7 @@ import { AdminCategoryAdd, AdminCategoryDelete, AdminCategoryEdit, AdminCategory
 const adminRouter = Router();
 
 // admin login 
+// adminRouter.post("/register", register);
 adminRouter.post("/login", adminLogin);
 
 // event adding and editing and deleting 

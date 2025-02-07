@@ -3,9 +3,30 @@ import EventAdd from "../models/AdminEventAdd.js";
 import AdminCategory from "../models/AdminCategoryAdd.js";
 import PaymentSchema from "../models/AdminPaymentAdd.js";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 import Admin from "../models/Admin.js";
+import  jwt  from "jsonwebtoken";
 
 dotenv.config();
+
+// export const register = async (req,res,next)=>{
+//   try {
+//     const {email,password} = req.body;
+//     if(!email && !password){
+//       return res.status(400).json({message:"email and password is invalid"});
+//     }
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const adminRg = new AdminRegister({
+//       email: email,
+//       password: hashedPassword,
+//     });
+//     await adminRg.save();
+
+//   } catch (error) {
+//     console.log(error.message)
+//      res.status(500).json({ error: "Registration failed" });
+//   }
+// }
 
 export const adminLogin = async (req, res, next) => {
   try {
@@ -13,16 +34,15 @@ export const adminLogin = async (req, res, next) => {
     if (!email && !password) {
       return res.status(400).json({ message: "email and password is invalid" });
     }
-    const admin = await Admin.find({ email });
+    const admin = await Admin.findOne({ email });
     if (!admin) {
-      return res.status(401).json({ message: "User not found" });
+      return res.status(401).json({ message: "User not found 0000" });
     }
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, admin.password);
     if (match) {
       const accessToken = await jwt.sign(
         {
-          // Valid for 5 hours
-          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 5,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 ,
           data: { email: req.body.email },
         },
         process.env.ACCESS_TOKEN_SECRET
