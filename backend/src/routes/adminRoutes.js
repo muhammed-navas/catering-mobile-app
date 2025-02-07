@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AdminCategoryAdd, AdminCategoryDelete, AdminCategoryEdit, AdminCategoryGet, adminEventAdd, adminEventDelete, adminEventEdit, adminEventGet, adminLogin, adminPaymentAdd, adminPaymentDelete, adminPaymentEdit, adminPaymentGet } from "../controllers/adminControllers.js";
+import { AdminCategoryAdd, AdminCategoryDelete, AdminCategoryEdit, AdminCategoryGet, adminEventAdd, adminEventDelete, adminEventEdit, adminEventGet, adminLogin, adminPaymentAdd, adminPaymentDelete, adminPaymentEdit, adminPaymentGet, getUserData } from "../controllers/adminControllers.js";
 
 const adminRouter = Router();
 
@@ -24,6 +24,9 @@ adminRouter.post("/add-payment-admin", adminPaymentAdd);
 adminRouter.get("/get-payment-admin", adminPaymentGet);
 adminRouter.put("/edit-payment-admin", adminPaymentEdit);
 adminRouter.delete("/delete-payment-admin", adminPaymentDelete);
+
+// get user data 
+adminRouter.get("/get-user", getUserData);
 
 
 export default adminRouter
